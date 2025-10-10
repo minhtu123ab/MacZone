@@ -1,0 +1,73 @@
+import axios from "axios";
+import { STORAGE_KEYS } from "../constants";
+
+const API_URL = "/api";
+
+// Create axios instance
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+// Add token to requests
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Handle response errors
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    // If 401 Unauthorized, clear token
+    if (error.response?.status === 401) {
+      const currentPath = window.location.pathname;
+
+      // Only clear token and redirect if not on auth pages
+      if (
+        !currentPath.includes("/login") &&
+        !currentPath.includes("/register")
+      ) {
+        localStorage.removeItem(STORAGE_KEYS.TOKEN);
+        localStorage.removeItem(STORAGE_KEYS.USER);
+
+        // Use a flag to prevent multiple redirects
+        if (!window.__isRedirecting__) {
+          window.__isRedirecting__ = true;
+          setTimeout(() => {
+            window.location.href = "/login";
+            window.__isRedirecting__ = false;
+          }, 100);
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Auth APIs
+export const authAPI = {
+  login: (data) => api.post("/auth/login", data),
+  register: (data) => api.post("/auth/register", data),
+  getProfile: () => api.get("/auth/profile"),
+  updateProfile: (data) => api.put("/auth/profile", data),
+  changePassword: (data) => api.post("/auth/change-password", data),
+  forgotPassword: (data) => api.post("/auth/forgot-password", data),
+  verifyResetCode: (data) => api.post("/auth/verify-reset-code", data),
+  resetPassword: (data) => api.post("/auth/reset-password", data),
+};
+
+export default api;

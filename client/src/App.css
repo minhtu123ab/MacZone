@@ -1,0 +1,238 @@
+/* Ant Design Dark Theme Overrides */
+.ant-layout {
+  background: #0a0a0a !important;
+}
+
+.ant-card {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1px solid rgba(45, 45, 45, 0.5) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+
+.ant-card-body {
+  padding: 32px !important;
+}
+
+.ant-input,
+.ant-input-password,
+.ant-input-affix-wrapper {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1.5px solid rgba(45, 45, 45, 0.8) !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  padding: 12px 16px !important;
+  height: auto !important;
+  min-height: 48px !important;
+  transition: all 0.3s ease !important;
+}
+
+.ant-input::placeholder,
+.ant-input-password::placeholder {
+  color: #86868b !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.ant-input-affix-wrapper .ant-input {
+  padding: 0 !important;
+  font-size: 15px !important;
+  background: transparent !important;
+  border: none !important;
+  min-height: auto !important;
+}
+
+.ant-input-prefix {
+  margin-right: 12px !important;
+  color: #86868b !important;
+  font-size: 16px !important;
+}
+
+.ant-input-suffix {
+  color: #86868b !important;
+  font-size: 16px !important;
+}
+
+.ant-input:hover,
+.ant-input-password:hover,
+.ant-input-affix-wrapper:hover {
+  border-color: rgba(59, 130, 246, 0.6) !important;
+  background: rgba(30, 30, 30, 0.9) !important;
+}
+
+.ant-input:focus,
+.ant-input-password:focus,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+  background: rgba(30, 30, 30, 0.95) !important;
+}
+
+.ant-btn {
+  border-radius: 10px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.ant-btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  border: none !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3) !important;
+  font-size: 15px !important;
+}
+
+.ant-btn-primary:hover {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%) !important;
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+.ant-btn-primary:active {
+  transform: translateY(0) !important;
+}
+
+.ant-btn-default {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1.5px solid rgba(45, 45, 45, 0.8) !important;
+  color: #ffffff !important;
+}
+
+.ant-btn-default:hover {
+  border-color: rgba(59, 130, 246, 0.6) !important;
+  color: #60a5fa !important;
+  background: rgba(30, 30, 30, 0.9) !important;
+}
+
+.ant-typography {
+  color: #ffffff !important;
+}
+
+.ant-form-item {
+  margin-bottom: 20px !important;
+}
+
+.ant-form-item-label > label {
+  color: #d2d2d7 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+.ant-form-item-explain-error {
+  font-size: 13px !important;
+  margin-top: 6px !important;
+}
+
+/* Checkbox Styling */
+.ant-checkbox-wrapper {
+  color: #d2d2d7 !important;
+}
+
+.ant-checkbox-inner {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1.5px solid rgba(45, 45, 45, 0.8) !important;
+  border-radius: 4px !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  border-color: #3b82f6 !important;
+}
+
+.ant-checkbox:hover .ant-checkbox-inner {
+  border-color: rgba(59, 130, 246, 0.6) !important;
+}
+
+/* Link Button Styling */
+.ant-btn-link {
+  color: #60a5fa !important;
+  padding: 0 !important;
+  height: auto !important;
+}
+
+.ant-btn-link:hover {
+  color: #3b82f6 !important;
+}
+
+/* Text Button Styling */
+.ant-btn-text {
+  color: #86868b !important;
+}
+
+.ant-btn-text:hover {
+  color: #60a5fa !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Smooth Transitions - Limited scope to avoid conflicts */
+button,
+a,
+.ant-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Selection Color */
+::selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: #ffffff;
+}
+
+/* Ant Design Dropdown Styling */
+.ant-dropdown-menu {
+  background: rgba(26, 26, 26, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(59, 130, 246, 0.2) !important;
+  padding: 8px !important;
+  min-width: 200px !important;
+  border-radius: 8px !important;
+}
+
+.ant-dropdown-menu-item {
+  border-radius: 6px !important;
+  margin: 2px 0 !important;
+  padding: 10px 12px !important;
+  color: #d2d2d7 !important;
+  transition: background 0.15s ease, color 0.15s ease !important;
+}
+
+.ant-dropdown-menu-item:hover {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: #60a5fa !important;
+}
+
+.ant-dropdown-menu-item-danger {
+  color: #d2d2d7 !important;
+}
+
+.ant-dropdown-menu-item-danger:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #ef4444 !important;
+}
+
+.ant-dropdown-menu-item-divider {
+  background: rgba(45, 45, 45, 0.5) !important;
+  margin: 6px 0 !important;
+}
+
+.ant-dropdown-menu-item .anticon {
+  margin-right: 10px !important;
+  font-size: 14px !important;
+}
+
+/* OTP Input */
+.otp-input {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.otp-input::-webkit-outer-spin-button,
+.otp-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

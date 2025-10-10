@@ -1,0 +1,85 @@
+<svg width="280" height="80" viewBox="0 0 280 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Text Gradient -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Icon Gradient -->
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow Filter -->
+    <filter id="textGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Small Apple Icon on Left -->
+  <g transform="translate(25, 40)">
+    <!-- Apple body -->
+    <path d="M 0,-18 C -10,-18 -18,-10 -18,2 C -18,10 -14,16 -8,19 C -4,21 0,22 4,21 C 10,20 14,16 16,10 C 17,6 17,2 16,-2 C 14,-8 10,-14 4,-17 C 3,-17.5 1,-18 0,-18 Z" 
+          fill="url(#iconGradient)" 
+          filter="url(#textGlow)"/>
+    
+    <!-- Bite -->
+    <ellipse cx="12" cy="-6" rx="5" ry="6" fill="#0a0a0a"/>
+    
+    <!-- Leaf -->
+    <path d="M -3,-19 Q -6,-23 -9,-22 Q -8,-21 -7,-20 Q -6,-19 -5,-18.5 Q -4,-19 -3,-19 Z" 
+          fill="#60a5fa"/>
+    
+    <!-- Stem -->
+    <rect x="-1.5" y="-20" width="3" height="4" rx="1.5" fill="#3b82f6"/>
+    
+    <!-- Shine -->
+    <ellipse cx="-6" cy="-8" rx="4" ry="6" fill="#ffffff" opacity="0.2"/>
+  </g>
+  
+  <!-- MacZone Text with shadow -->
+  <g>
+    <!-- Text shadow for depth -->
+    <text x="52" y="52" 
+          font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Arial, sans-serif" 
+          font-size="42" 
+          font-weight="800" 
+          fill="#000000" 
+          letter-spacing="1"
+          opacity="0.3">
+      MacZone
+    </text>
+    
+    <!-- Main text -->
+    <text x="50" y="50" 
+          font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Arial, sans-serif" 
+          font-size="42" 
+          font-weight="800" 
+          fill="url(#textGradient)" 
+          letter-spacing="1"
+          filter="url(#textGlow)">
+      MacZone
+    </text>
+  </g>
+  
+  <!-- Tagline -->
+  <text x="52" y="68" 
+        font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Arial, sans-serif" 
+        font-size="12" 
+        font-weight="500" 
+        fill="#86868b" 
+        letter-spacing="2">
+    PREMIUM APPLE STORE
+  </text>
+  
+  <!-- Decorative line -->
+  <line x1="52" y1="58" x2="240" y2="58" stroke="url(#textGradient)" stroke-width="1" opacity="0.3"/>
+</svg>
+
