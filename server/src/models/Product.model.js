@@ -16,10 +16,6 @@ const productSchema = new mongoose.Schema(
       ref: "Category",
       required: [true, "Please provide a category"],
     },
-    brand: {
-      type: String,
-      trim: true,
-    },
     thumbnail_url: {
       type: String,
       trim: true,
@@ -56,7 +52,6 @@ const productSchema = new mongoose.Schema(
 // Index for search and filter
 productSchema.index({ name: "text", description: "text" });
 productSchema.index({ category_id: 1 });
-productSchema.index({ brand: 1 });
 productSchema.index({ is_active: 1 });
 
 export default mongoose.model("Product", productSchema);

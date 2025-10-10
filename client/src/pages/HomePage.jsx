@@ -1,4 +1,5 @@
-import { Typography, Button } from "antd";
+import { useState, useEffect } from "react";
+import { Typography, Button, Spin, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   AppleOutlined,
@@ -19,13 +20,34 @@ import StatCard from "../components/common/StatCard";
 import TrustBadge from "../components/common/TrustBadge";
 import NewsletterSection from "../components/features/home/NewsletterSection";
 import CTASection from "../components/features/home/CTASection";
-import { APP_NAME, PRODUCT_CATEGORIES } from "../constants";
+import { APP_NAME } from "../constants";
+import { categoryAPI } from "../services/api";
 
 const { Title, Paragraph } = Typography;
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch categories from API
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        const response = await categoryAPI.getAll();
+        setCategories(response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        message.error("Failed to load categories");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const features = [
     {
@@ -203,17 +225,29 @@ export default function HomePage() {
             </Paragraph>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {PRODUCT_CATEGORIES.map((product) => (
-              <ProductCard
-                key={product.name}
-                name={product.name}
-                image={product.image}
-                description={product.description}
-                onClick={() => console.log(`${product.name} clicked`)}
-              />
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <Spin size="large" tip="Loading categories..." />
+            </div>
+          ) : categories.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {categories.map((category) => (
+                <ProductCard
+                  key={category._id}
+                  name={category.name}
+                  image={category.image}
+                  description={category.description}
+                  onClick={() => console.log(`${category.name} clicked`)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <Paragraph className="!text-lg !text-apple-gray">
+                No categories available at the moment
+              </Paragraph>
+            </div>
+          )}
         </div>
       </div>
 

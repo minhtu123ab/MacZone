@@ -185,3 +185,42 @@ export const changePasswordValidation = [
       return true;
     }),
 ];
+
+// ========== CATEGORY VALIDATIONS ==========
+
+// Validation rules for creating category
+export const createCategoryValidation = [
+  body("name")
+    .trim()
+    .notEmpty()
+    .withMessage("Category name is required")
+    .isLength({ min: 2 })
+    .withMessage("Category name must be at least 2 characters long"),
+
+  body("description").optional().trim(),
+
+  body("image")
+    .optional()
+    .trim()
+    .isURL()
+    .withMessage("Please provide a valid image URL"),
+];
+
+// Validation rules for updating category
+export const updateCategoryValidation = [
+  body("name")
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage("Category name cannot be empty")
+    .isLength({ min: 2 })
+    .withMessage("Category name must be at least 2 characters long"),
+
+  body("description").optional().trim(),
+
+  body("image")
+    .optional()
+    .trim()
+    .isURL()
+    .withMessage("Please provide a valid image URL"),
+];

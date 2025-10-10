@@ -2,34 +2,6 @@
 export const APP_NAME = "MacZone";
 export const APP_DESCRIPTION = "Premium Apple Products Store";
 
-// Product categories with images
-export const PRODUCT_CATEGORIES = [
-  {
-    name: "MacBook",
-    description: "Powerful laptops for professionals",
-    image:
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&auto=format&fit=crop",
-  },
-  {
-    name: "iPhone",
-    description: "The ultimate smartphone experience",
-    image:
-      "https://images.unsplash.com/photo-1678652197831-2d180705cd2c?w=800&auto=format&fit=crop",
-  },
-  {
-    name: "iPad",
-    description: "Versatile tablet for work and play",
-    image:
-      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800&auto=format&fit=crop",
-  },
-  {
-    name: "AirPods",
-    description: "Wireless audio perfection",
-    image:
-      "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=800&auto=format&fit=crop",
-  },
-];
-
 // Routes
 export const ROUTES = {
   HOME: "/",
@@ -52,6 +24,13 @@ export const API_ENDPOINTS = {
     FORGOT_PASSWORD: "/auth/forgot-password",
     VERIFY_RESET_CODE: "/auth/verify-reset-code",
     RESET_PASSWORD: "/auth/reset-password",
+  },
+  CATEGORIES: {
+    GET_ALL: "/categories",
+    GET_BY_ID: (id) => `/categories/${id}`,
+    CREATE: "/categories",
+    UPDATE: (id) => `/categories/${id}`,
+    DELETE: (id) => `/categories/${id}`,
   },
 };
 
