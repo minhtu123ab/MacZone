@@ -65,3 +65,55 @@ code {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Custom Select Styling */
+.ant-select-selector {
+  height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  background-color: rgba(30, 30, 30, 0.5) !important;
+  border-color: rgba(59, 130, 246, 0.2) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.ant-select-selector:hover {
+  border-color: rgba(59, 130, 246, 0.6) !important;
+}
+
+.ant-select-focused .ant-select-selector {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
+}
+
+.ant-select-selection-placeholder,
+.ant-select-selection-item {
+  display: flex !important;
+  align-items: center !important;
+  line-height: 48px !important;
+}
+
+/* Custom Select Dropdown */
+.custom-select-dropdown {
+  background: rgba(20, 20, 20, 0.95) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.custom-select-dropdown .ant-select-item {
+  color: #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.custom-select-dropdown .ant-select-item:hover {
+  background: rgba(59, 130, 246, 0.2) !important;
+  color: #ffffff;
+}
+
+.custom-select-dropdown .ant-select-item-option-selected {
+  background: rgba(59, 130, 246, 0.3) !important;
+  color: #60a5fa;
+  font-weight: 600;
+}

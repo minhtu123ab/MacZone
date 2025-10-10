@@ -224,3 +224,137 @@ export const updateCategoryValidation = [
     .isURL()
     .withMessage("Please provide a valid image URL"),
 ];
+
+// ========== PRODUCT VALIDATIONS ==========
+
+// Validation rules for creating product
+export const createProductValidation = [
+  body("name")
+    .trim()
+    .notEmpty()
+    .withMessage("Product name is required")
+    .isLength({ min: 2 })
+    .withMessage("Product name must be at least 2 characters long"),
+
+  body("description").optional().trim(),
+
+  body("category_id")
+    .notEmpty()
+    .withMessage("Category is required")
+    .isMongoId()
+    .withMessage("Invalid category ID"),
+
+  body("thumbnail_url")
+    .optional()
+    .trim()
+    .isURL()
+    .withMessage("Please provide a valid thumbnail URL"),
+
+  body("specifications")
+    .optional()
+    .isObject()
+    .withMessage("Specifications must be an object"),
+];
+
+// Validation rules for updating product
+export const updateProductValidation = [
+  body("name")
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage("Product name cannot be empty")
+    .isLength({ min: 2 })
+    .withMessage("Product name must be at least 2 characters long"),
+
+  body("description").optional().trim(),
+
+  body("category_id").optional().isMongoId().withMessage("Invalid category ID"),
+
+  body("thumbnail_url")
+    .optional()
+    .trim()
+    .isURL()
+    .withMessage("Please provide a valid thumbnail URL"),
+
+  body("specifications")
+    .optional()
+    .isObject()
+    .withMessage("Specifications must be an object"),
+
+  body("is_active")
+    .optional()
+    .isBoolean()
+    .withMessage("is_active must be a boolean"),
+];
+
+// ========== PRODUCT VARIANT VALIDATIONS ==========
+
+// Validation rules for creating variant
+export const createVariantValidation = [
+  body("color").optional().trim(),
+
+  body("storage").optional().trim(),
+
+  body("price")
+    .notEmpty()
+    .withMessage("Price is required")
+    .isNumeric()
+    .withMessage("Price must be a number")
+    .custom((value) => value >= 0)
+    .withMessage("Price cannot be negative"),
+
+  body("stock")
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("Stock must be a non-negative integer"),
+
+  body("sku").optional().trim(),
+
+  body("additional_specs")
+    .optional()
+    .isObject()
+    .withMessage("Additional specs must be an object"),
+
+  body("image_url")
+    .optional()
+    .trim()
+    .isURL()
+    .withMessage("Please provide a valid image URL"),
+];
+
+// Validation rules for updating variant
+export const updateVariantValidation = [
+  body("color").optional().trim(),
+
+  body("storage").optional().trim(),
+
+  body("price")
+    .optional()
+    .isNumeric()
+    .withMessage("Price must be a number")
+    .custom((value) => value >= 0)
+    .withMessage("Price cannot be negative"),
+
+  body("stock")
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("Stock must be a non-negative integer"),
+
+  body("sku").optional().trim(),
+
+  body("additional_specs")
+    .optional()
+    .isObject()
+    .withMessage("Additional specs must be an object"),
+
+  body("image_url")
+    .optional()
+    .trim()
+    .isURL()
+    .withMessage("Please provide a valid image URL"),
+
+  body("is_active")
+    .optional()
+    .isBoolean()
+    .withMessage("is_active must be a boolean"),
+];

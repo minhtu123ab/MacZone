@@ -237,7 +237,7 @@ export default function HomePage() {
                   name={category.name}
                   image={category.image}
                   description={category.description}
-                  onClick={() => console.log(`${category.name} clicked`)}
+                  onClick={() => navigate(`/products?category=${category._id}`)}
                 />
               ))}
             </div>

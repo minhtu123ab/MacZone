@@ -50,8 +50,9 @@ const productSchema = new mongoose.Schema(
 );
 
 // Index for search and filter
-productSchema.index({ name: "text", description: "text" });
+productSchema.index({ name: 1 }); // Index for name regex search
 productSchema.index({ category_id: 1 });
 productSchema.index({ is_active: 1 });
+productSchema.index({ name: 1, category_id: 1 }); // Compound index for filtered search
 
 export default mongoose.model("Product", productSchema);

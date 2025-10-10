@@ -59,10 +59,20 @@ app.get("/", (req, res) => {
 // Import routes
 import authRoutes from "./routes/auth.routes.js";
 import categoryRoutes from "./routes/category.routes.js";
+import productRoutes from "./routes/product.routes.js";
+import productVariantRoutes from "./routes/productVariant.routes.js";
+import variantRoutes from "./routes/variant.routes.js";
+import productImageRoutes from "./routes/productImage.routes.js";
+import imageRoutes from "./routes/image.routes.js";
 
 // Use routes
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/products/:productId/variants", productVariantRoutes);
+app.use("/api/products/:productId/images", productImageRoutes);
+app.use("/api/variants", variantRoutes);
+app.use("/api/images", imageRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

@@ -8,6 +8,8 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "seed:categories": "node src/utils/seedCategories.js",
+    "seed:products": "node src/utils/seedProducts.js",
+    "seed:all": "npm run seed:categories && npm run seed:products",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

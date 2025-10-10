@@ -10,6 +10,8 @@ export const ROUTES = {
   PROFILE: "/profile",
   FORGOT_PASSWORD: "/forgot-password",
   PRODUCTS: "/products",
+  PRODUCT_DETAIL: (id) => `/products/${id}`,
+  PRODUCTS_BY_CATEGORY: (categoryId) => `/products?category=${categoryId}`,
   CART: "/cart",
   ORDERS: "/orders",
 };
@@ -31,6 +33,22 @@ export const API_ENDPOINTS = {
     CREATE: "/categories",
     UPDATE: (id) => `/categories/${id}`,
     DELETE: (id) => `/categories/${id}`,
+  },
+  PRODUCTS: {
+    GET_ALL: "/products",
+    GET_BY_ID: (id) => `/products/${id}`,
+    GET_BY_CATEGORY: (categoryId) => `/products/category/${categoryId}`,
+    CREATE: "/products",
+    UPDATE: (id) => `/products/${id}`,
+    DELETE: (id) => `/products/${id}`,
+  },
+  VARIANTS: {
+    GET_BY_PRODUCT: (productId) => `/products/${productId}/variants`,
+    GET_BY_ID: (id) => `/variants/${id}`,
+    CREATE: (productId) => `/products/${productId}/variants`,
+    UPDATE: (id) => `/variants/${id}`,
+    DELETE: (id) => `/variants/${id}`,
+    UPDATE_STOCK: (id) => `/variants/${id}/stock`,
   },
 };
 

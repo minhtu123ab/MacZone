@@ -79,4 +79,27 @@ export const categoryAPI = {
   delete: (id) => api.delete(`/categories/${id}`),
 };
 
+// Product APIs
+export const productAPI = {
+  getAll: (params) => api.get("/products", { params }),
+  getById: (id) => api.get(`/products/${id}`),
+  getByCategory: (categoryId, params) =>
+    api.get(`/products/category/${categoryId}`, { params }),
+  create: (data) => api.post("/products", data),
+  update: (id, data) => api.put(`/products/${id}`, data),
+  delete: (id) => api.delete(`/products/${id}`),
+};
+
+// Variant APIs
+export const variantAPI = {
+  getByProduct: (productId, params) =>
+    api.get(`/products/${productId}/variants`, { params }),
+  getById: (id) => api.get(`/variants/${id}`),
+  create: (productId, data) =>
+    api.post(`/products/${productId}/variants`, data),
+  update: (id, data) => api.put(`/variants/${id}`, data),
+  delete: (id) => api.delete(`/variants/${id}`),
+  updateStock: (id, stock) => api.patch(`/variants/${id}/stock`, { stock }),
+};
+
 export default api;
