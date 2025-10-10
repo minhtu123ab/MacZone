@@ -64,6 +64,7 @@ import productVariantRoutes from "./routes/productVariant.routes.js";
 import variantRoutes from "./routes/variant.routes.js";
 import productImageRoutes from "./routes/productImage.routes.js";
 import imageRoutes from "./routes/image.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
 
 // Use routes
 app.use("/api/auth", authRoutes);
@@ -73,6 +74,7 @@ app.use("/api/products/:productId/variants", productVariantRoutes);
 app.use("/api/products/:productId/images", productImageRoutes);
 app.use("/api/variants", variantRoutes);
 app.use("/api/images", imageRoutes);
+app.use("/api/cart", cartRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

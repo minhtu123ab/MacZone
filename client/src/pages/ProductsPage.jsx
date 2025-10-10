@@ -13,13 +13,7 @@ import {
   message,
   Button,
 } from "antd";
-import {
-  SearchOutlined,
-  AppstoreOutlined,
-  FilterOutlined,
-  ArrowLeftOutlined,
-  HomeOutlined,
-} from "@ant-design/icons";
+import { SearchOutlined, FilterOutlined } from "@ant-design/icons";
 import PageLayout from "../components/layout/PageLayout";
 import { productAPI, categoryAPI } from "../services/api";
 import { ROUTES } from "../constants";
@@ -150,15 +144,13 @@ export default function ProductsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header with Back Button */}
           <div className="mb-12">
-            <button
+            <Button
+              type="text"
               onClick={() => navigate(ROUTES.HOME)}
-              className="cursor-pointer group inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-apple-blue/50 transition-all duration-300 mb-8"
+              className="!text-apple-blue-light hover:!text-apple-blue-light mb-8"
             >
-              <ArrowLeftOutlined className="text-apple-blue group-hover:text-apple-blue-light transition-colors" />
-              <span className="text-white/80 group-hover:text-white font-medium transition-colors">
-                Back to Home
-              </span>
-            </button>
+              ← Back to Home
+            </Button>
 
             <div className="text-center mb-4">
               <div className="inline-flex items-center justify-center gap-4 mb-4">

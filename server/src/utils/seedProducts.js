@@ -37,14 +37,13 @@ const seedProducts = async () => {
         description:
           "The ultimate iPhone with titanium design, A17 Pro chip, and the most advanced camera system ever on iPhone",
         category_id: categoryMap["iPhone"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800",
+        thumbnail_url: "https://picsum.photos/seed/iphone15promax/800/800",
         images: [
-          "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800",
-          "https://images.unsplash.com/photo-1695653422715-991ec3a0db7a?w=800",
-          "https://images.unsplash.com/photo-1696446702061-cbd8e4932b8e?w=800",
-          "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800",
-          "https://images.unsplash.com/photo-1678652197831-2d180705cd2c?w=800",
+          "https://picsum.photos/seed/iphone15promax1/800/800",
+          "https://picsum.photos/seed/iphone15promax2/800/800",
+          "https://picsum.photos/seed/iphone15promax3/800/800",
+          "https://picsum.photos/seed/iphone15promax4/800/800",
+          "https://picsum.photos/seed/iphone15promax5/800/800",
         ],
         specifications: {
           Chip: "A17 Pro",
@@ -121,13 +120,12 @@ const seedProducts = async () => {
         description:
           "Pro camera system, Action button, A17 Pro chip, and titanium design in a compact size",
         category_id: categoryMap["iPhone"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1696446702061-cbd8e4932b8e?w=800",
+        thumbnail_url: "https://picsum.photos/seed/iphone15pro/800/800",
         images: [
-          "https://images.unsplash.com/photo-1696446702061-cbd8e4932b8e?w=800",
-          "https://images.unsplash.com/photo-1678911820864-e5c043c87a98?w=800",
-          "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800",
-          "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?w=800",
+          "https://picsum.photos/seed/iphone15pro1/800/800",
+          "https://picsum.photos/seed/iphone15pro2/800/800",
+          "https://picsum.photos/seed/iphone15pro3/800/800",
+          "https://picsum.photos/seed/iphone15pro4/800/800",
         ],
         specifications: {
           Chip: "A17 Pro",
@@ -190,8 +188,13 @@ const seedProducts = async () => {
         description:
           "Dynamic Island, 48MP Main camera, and A16 Bionic chip in a durable color-infused glass design",
         category_id: categoryMap["iPhone"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1678911820864-e5c043c87a98?w=800",
+        thumbnail_url: "https://picsum.photos/seed/iphone15/800/800",
+        images: [
+          "https://picsum.photos/seed/iphone151/800/800",
+          "https://picsum.photos/seed/iphone152/800/800",
+          "https://picsum.photos/seed/iphone153/800/800",
+          "https://picsum.photos/seed/iphone154/800/800",
+        ],
         specifications: {
           Chip: "A16 Bionic",
           Display: "6.1-inch Super Retina XDR",
@@ -216,8 +219,13 @@ const seedProducts = async () => {
         description:
           "Advanced dual-camera system, Crash Detection, and all-day battery life",
         category_id: categoryMap["iPhone"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?w=800",
+        thumbnail_url: "https://picsum.photos/seed/iphone14/800/800",
+        images: [
+          "https://picsum.photos/seed/iphone141/800/800",
+          "https://picsum.photos/seed/iphone142/800/800",
+          "https://picsum.photos/seed/iphone143/800/800",
+          "https://picsum.photos/seed/iphone144/800/800",
+        ],
         specifications: {
           Chip: "A15 Bionic",
           Display: "6.1-inch Super Retina XDR",
@@ -241,13 +249,12 @@ const seedProducts = async () => {
         description:
           "The ultimate iPad experience with M2 chip, Liquid Retina XDR display, and Apple Pencil hover",
         category_id: categoryMap["iPad"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1585790050230-5dd28404f905?w=800",
+        thumbnail_url: "https://picsum.photos/seed/ipadprom2/800/800",
         images: [
-          "https://images.unsplash.com/photo-1585790050230-5dd28404f905?w=800",
-          "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800",
-          "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800",
-          "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800",
+          "https://picsum.photos/seed/ipadprom21/800/800",
+          "https://picsum.photos/seed/ipadprom22/800/800",
+          "https://picsum.photos/seed/ipadprom23/800/800",
+          "https://picsum.photos/seed/ipadprom24/800/800",
         ],
         specifications: {
           Chip: "M2",
@@ -273,8 +280,13 @@ const seedProducts = async () => {
         description:
           "Powerful M1 chip, 10.9-inch Liquid Retina display, and support for Magic Keyboard",
         category_id: categoryMap["iPad"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800",
+        thumbnail_url: "https://picsum.photos/seed/ipadairm1/800/800",
+        images: [
+          "https://picsum.photos/seed/ipadairm11/800/800",
+          "https://picsum.photos/seed/ipadairm12/800/800",
+          "https://picsum.photos/seed/ipadairm13/800/800",
+          "https://picsum.photos/seed/ipadairm14/800/800",
+        ],
         specifications: {
           Chip: "M1",
           Display: "10.9-inch Liquid Retina",
@@ -297,8 +309,13 @@ const seedProducts = async () => {
         description:
           "Colorfully reimagined iPad with A14 Bionic chip and 10.9-inch display",
         category_id: categoryMap["iPad"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800",
+        thumbnail_url: "https://picsum.photos/seed/ipad10gen/800/800",
+        images: [
+          "https://picsum.photos/seed/ipad10gen1/800/800",
+          "https://picsum.photos/seed/ipad10gen2/800/800",
+          "https://picsum.photos/seed/ipad10gen3/800/800",
+          "https://picsum.photos/seed/ipad10gen4/800/800",
+        ],
         specifications: {
           Chip: "A14 Bionic",
           Display: "10.9-inch Liquid Retina",
@@ -324,14 +341,13 @@ const seedProducts = async () => {
         description:
           "The most powerful MacBook Pro ever with M3 Max chip, up to 128GB unified memory, and Liquid Retina XDR display",
         category_id: categoryMap["Mac"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+        thumbnail_url: "https://picsum.photos/seed/mbp16m3max/800/800",
         images: [
-          "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
-          "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800",
-          "https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=800",
-          "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800",
-          "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800",
+          "https://picsum.photos/seed/mbp16m3max1/800/800",
+          "https://picsum.photos/seed/mbp16m3max2/800/800",
+          "https://picsum.photos/seed/mbp16m3max3/800/800",
+          "https://picsum.photos/seed/mbp16m3max4/800/800",
+          "https://picsum.photos/seed/mbp16m3max5/800/800",
         ],
         specifications: {
           Chip: "M3 Max",
@@ -354,8 +370,13 @@ const seedProducts = async () => {
         description:
           "Supercharged by M3 Pro chip with exceptional performance in a compact design",
         category_id: categoryMap["Mac"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800",
+        thumbnail_url: "https://picsum.photos/seed/mbp14m3pro/800/800",
+        images: [
+          "https://picsum.photos/seed/mbp14m3pro1/800/800",
+          "https://picsum.photos/seed/mbp14m3pro2/800/800",
+          "https://picsum.photos/seed/mbp14m3pro3/800/800",
+          "https://picsum.photos/seed/mbp14m3pro4/800/800",
+        ],
         specifications: {
           Chip: "M3 Pro",
           CPU: "12-core",
@@ -380,8 +401,13 @@ const seedProducts = async () => {
         description:
           "Strikingly thin and fast with M2 chip and spacious 15.3-inch display",
         category_id: categoryMap["Mac"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800",
+        thumbnail_url: "https://picsum.photos/seed/mba15m2/800/800",
+        images: [
+          "https://picsum.photos/seed/mba15m21/800/800",
+          "https://picsum.photos/seed/mba15m22/800/800",
+          "https://picsum.photos/seed/mba15m23/800/800",
+          "https://picsum.photos/seed/mba15m24/800/800",
+        ],
         specifications: {
           Chip: "M2",
           CPU: "8-core",
@@ -403,8 +429,13 @@ const seedProducts = async () => {
         description:
           "Remarkably thin and light with M2 chip in four beautiful colors",
         category_id: categoryMap["Mac"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=800",
+        thumbnail_url: "https://picsum.photos/seed/mba13m2/800/800",
+        images: [
+          "https://picsum.photos/seed/mba13m21/800/800",
+          "https://picsum.photos/seed/mba13m22/800/800",
+          "https://picsum.photos/seed/mba13m23/800/800",
+          "https://picsum.photos/seed/mba13m24/800/800",
+        ],
         specifications: {
           Chip: "M2",
           CPU: "8-core",
@@ -426,8 +457,13 @@ const seedProducts = async () => {
         description:
           "Stunning all-in-one desktop with M3 chip, 4.5K Retina display, and seven vibrant colors",
         category_id: categoryMap["Mac"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800",
+        thumbnail_url: "https://picsum.photos/seed/imac24m3/800/800",
+        images: [
+          "https://picsum.photos/seed/imac24m31/800/800",
+          "https://picsum.photos/seed/imac24m32/800/800",
+          "https://picsum.photos/seed/imac24m33/800/800",
+          "https://picsum.photos/seed/imac24m34/800/800",
+        ],
         specifications: {
           Chip: "M3",
           CPU: "8-core",
@@ -452,8 +488,13 @@ const seedProducts = async () => {
         description:
           "Advanced health and fitness features with always-on Retina display and S9 SiP",
         category_id: categoryMap["Apple Watch"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800",
+        thumbnail_url: "https://picsum.photos/seed/awseries9/800/800",
+        images: [
+          "https://picsum.photos/seed/awseries91/800/800",
+          "https://picsum.photos/seed/awseries92/800/800",
+          "https://picsum.photos/seed/awseries93/800/800",
+          "https://picsum.photos/seed/awseries94/800/800",
+        ],
         specifications: {
           Chip: "S9 SiP",
           Display: "Always-On Retina LTPO OLED",
@@ -501,8 +542,13 @@ const seedProducts = async () => {
         description:
           "The most rugged and capable Apple Watch with titanium case, Action button, and precision dual-frequency GPS",
         category_id: categoryMap["Apple Watch"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=800",
+        thumbnail_url: "https://picsum.photos/seed/awultra2/800/800",
+        images: [
+          "https://picsum.photos/seed/awultra21/800/800",
+          "https://picsum.photos/seed/awultra22/800/800",
+          "https://picsum.photos/seed/awultra23/800/800",
+          "https://picsum.photos/seed/awultra24/800/800",
+        ],
         specifications: {
           Chip: "S9 SiP",
           Display: "Always-On Retina LTPO OLED",
@@ -526,8 +572,13 @@ const seedProducts = async () => {
         description:
           "Essential features at an affordable price with Retina display and advanced sensors",
         category_id: categoryMap["Apple Watch"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=800",
+        thumbnail_url: "https://picsum.photos/seed/awse2/800/800",
+        images: [
+          "https://picsum.photos/seed/awse21/800/800",
+          "https://picsum.photos/seed/awse22/800/800",
+          "https://picsum.photos/seed/awse23/800/800",
+          "https://picsum.photos/seed/awse24/800/800",
+        ],
         specifications: {
           Chip: "S8 SiP",
           Display: "Retina LTPO OLED",
@@ -571,12 +622,11 @@ const seedProducts = async () => {
         description:
           "Active Noise Cancellation, Adaptive Audio, and personalized Spatial Audio with H2 chip",
         category_id: categoryMap["AirPods"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=800",
+        thumbnail_url: "https://picsum.photos/seed/airpodspro2/800/800",
         images: [
-          "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=800",
-          "https://images.unsplash.com/photo-1588156979435-379b2c84c6bd?w=800",
-          "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=800",
+          "https://picsum.photos/seed/airpodspro21/800/800",
+          "https://picsum.photos/seed/airpodspro22/800/800",
+          "https://picsum.photos/seed/airpodspro23/800/800",
         ],
         specifications: {
           Chip: "H2",
@@ -596,8 +646,13 @@ const seedProducts = async () => {
         description:
           "Over-ear headphones with Active Noise Cancellation, Spatial Audio, and exceptional sound quality",
         category_id: categoryMap["AirPods"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1625758525758-ee5f0e1ba3be?w=800",
+        thumbnail_url: "https://picsum.photos/seed/airpodsmax/800/800",
+        images: [
+          "https://picsum.photos/seed/airpodsmax1/800/800",
+          "https://picsum.photos/seed/airpodsmax2/800/800",
+          "https://picsum.photos/seed/airpodsmax3/800/800",
+          "https://picsum.photos/seed/airpodsmax4/800/800",
+        ],
         specifications: {
           Chip: "H1",
           "Noise Cancellation": "Active Noise Cancellation",
@@ -619,8 +674,13 @@ const seedProducts = async () => {
         description:
           "Spatial Audio, Adaptive EQ, and sweat-resistant design with up to 30 hours of battery",
         category_id: categoryMap["AirPods"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=800",
+        thumbnail_url: "https://picsum.photos/seed/airpods3/800/800",
+        images: [
+          "https://picsum.photos/seed/airpods31/800/800",
+          "https://picsum.photos/seed/airpods32/800/800",
+          "https://picsum.photos/seed/airpods33/800/800",
+          "https://picsum.photos/seed/airpods34/800/800",
+        ],
         specifications: {
           Chip: "H1",
           "Audio Features": "Spatial Audio, Adaptive EQ",
@@ -637,8 +697,12 @@ const seedProducts = async () => {
         description:
           "Effortless setup, high-quality sound, and seamless switching between devices",
         category_id: categoryMap["AirPods"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1588156979435-379b2c84c6bd?w=800",
+        thumbnail_url: "https://picsum.photos/seed/airpods2/800/800",
+        images: [
+          "https://picsum.photos/seed/airpods21/800/800",
+          "https://picsum.photos/seed/airpods22/800/800",
+          "https://picsum.photos/seed/airpods23/800/800",
+        ],
         specifications: {
           Chip: "H1",
           "Battery Life": "5 hours, 24 hours with case",
@@ -656,8 +720,12 @@ const seedProducts = async () => {
         description:
           "Wireless keyboard with Touch ID and numeric keypad for secure authentication",
         category_id: categoryMap["Accessories"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800",
+        thumbnail_url: "https://picsum.photos/seed/magickeyboard/800/800",
+        images: [
+          "https://picsum.photos/seed/magickeyboard1/800/800",
+          "https://picsum.photos/seed/magickeyboard2/800/800",
+          "https://picsum.photos/seed/magickeyboard3/800/800",
+        ],
         specifications: {
           Connectivity: "Bluetooth",
           "Touch ID": "Yes",
@@ -674,8 +742,12 @@ const seedProducts = async () => {
         name: "Magic Mouse (USB-C)",
         description: "Wireless, rechargeable mouse with Multi-Touch surface",
         category_id: categoryMap["Accessories"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1527814050087-3793815479db?w=800",
+        thumbnail_url: "https://picsum.photos/seed/magicmouse/800/800",
+        images: [
+          "https://picsum.photos/seed/magicmouse1/800/800",
+          "https://picsum.photos/seed/magicmouse2/800/800",
+          "https://picsum.photos/seed/magicmouse3/800/800",
+        ],
         specifications: {
           Connectivity: "Bluetooth",
           "Multi-Touch": "Yes",
@@ -692,8 +764,12 @@ const seedProducts = async () => {
         description:
           "Pixel-perfect precision and industry-leading low latency for iPad Pro and iPad Air",
         category_id: categoryMap["Accessories"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800",
+        thumbnail_url: "https://picsum.photos/seed/applepencil2/800/800",
+        images: [
+          "https://picsum.photos/seed/applepencil21/800/800",
+          "https://picsum.photos/seed/applepencil22/800/800",
+          "https://picsum.photos/seed/applepencil23/800/800",
+        ],
         specifications: {
           Attachment: "Magnetic",
           Charging: "Wireless (via iPad)",
@@ -708,8 +784,12 @@ const seedProducts = async () => {
         description:
           "Fast, efficient charging at home, in the office, or on the go",
         category_id: categoryMap["Accessories"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1609592306580-1134723f2d3d?w=800",
+        thumbnail_url: "https://picsum.photos/seed/poweradapter20w/800/800",
+        images: [
+          "https://picsum.photos/seed/poweradapter20w1/800/800",
+          "https://picsum.photos/seed/poweradapter20w2/800/800",
+          "https://picsum.photos/seed/poweradapter20w3/800/800",
+        ],
         specifications: {
           Type: "USB-C Power Adapter",
           Power: "20W",
@@ -724,8 +804,12 @@ const seedProducts = async () => {
         description:
           "Connect your iPhone or other device with Lightning connector to charge and sync",
         category_id: categoryMap["Accessories"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1591290619762-d36b70114e0d?w=800",
+        thumbnail_url: "https://picsum.photos/seed/usbclightning/800/800",
+        images: [
+          "https://picsum.photos/seed/usbclightning1/800/800",
+          "https://picsum.photos/seed/usbclightning2/800/800",
+          "https://picsum.photos/seed/usbclightning3/800/800",
+        ],
         specifications: {
           Length: "1 meter",
           Connectors: "USB-C to Lightning",
@@ -739,8 +823,12 @@ const seedProducts = async () => {
         description:
           "Perfectly aligned magnets attach to your iPhone 12 and later for faster wireless charging",
         category_id: categoryMap["Accessories"],
-        thumbnail_url:
-          "https://images.unsplash.com/photo-1625297139332-c582b7c78f20?w=800",
+        thumbnail_url: "https://picsum.photos/seed/magsafe/800/800",
+        images: [
+          "https://picsum.photos/seed/magsafe1/800/800",
+          "https://picsum.photos/seed/magsafe2/800/800",
+          "https://picsum.photos/seed/magsafe3/800/800",
+        ],
         specifications: {
           Type: "Magnetic Wireless Charger",
           "Max Power": "15W",

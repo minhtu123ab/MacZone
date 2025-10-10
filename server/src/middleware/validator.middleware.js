@@ -358,3 +358,34 @@ export const updateVariantValidation = [
     .isBoolean()
     .withMessage("is_active must be a boolean"),
 ];
+
+// ========== CART VALIDATIONS ==========
+
+// Validation rules for adding to cart
+export const addToCartValidation = [
+  body("product_id")
+    .notEmpty()
+    .withMessage("Product ID is required")
+    .isMongoId()
+    .withMessage("Invalid product ID"),
+
+  body("variant_id")
+    .notEmpty()
+    .withMessage("Variant ID is required")
+    .isMongoId()
+    .withMessage("Invalid variant ID"),
+
+  body("quantity")
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage("Quantity must be at least 1"),
+];
+
+// Validation rules for updating cart item
+export const updateCartItemValidation = [
+  body("quantity")
+    .notEmpty()
+    .withMessage("Quantity is required")
+    .isInt({ min: 1 })
+    .withMessage("Quantity must be at least 1"),
+];

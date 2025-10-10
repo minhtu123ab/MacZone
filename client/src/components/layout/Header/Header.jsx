@@ -8,11 +8,22 @@ import {
   AppleOutlined,
 } from "@ant-design/icons";
 import useAuthStore from "../../../store/useAuthStore";
+import useCartStore from "../../../store/useCartStore";
 
 export default function Header() {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuthStore();
+  const { fetchCartCount, resetCart } = useCartStore();
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  // Fetch cart count on mount if authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchCartCount();
+    } else {
+      resetCart();
+    }
+  }, [isAuthenticated, fetchCartCount, resetCart]);
 
   // Close dropdown on scroll
   useEffect(() => {
@@ -38,6 +49,7 @@ export default function Header() {
         break;
       case "logout":
         logout();
+        resetCart();
         navigate("/login");
         break;
       default:

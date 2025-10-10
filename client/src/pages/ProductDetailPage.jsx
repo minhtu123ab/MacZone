@@ -6,12 +6,10 @@ import {
   Col,
   Button,
   InputNumber,
-  Tag,
   Spin,
   message,
   Breadcrumb,
   Divider,
-  Card,
 } from "antd";
 import {
   ShoppingCartOutlined,
@@ -22,12 +20,16 @@ import {
 import PageLayout from "../components/layout/PageLayout";
 import { productAPI } from "../services/api";
 import { ROUTES } from "../constants";
+import useAuthStore from "../store/useAuthStore";
+import useCartStore from "../store/useCartStore";
 
 const { Title, Paragraph, Text } = Typography;
 
 export default function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
+  const { addToCart, loading: cartLoading } = useCartStore();
 
   const [product, setProduct] = useState(null);
   const [variants, setVariants] = useState([]);
@@ -76,7 +78,14 @@ export default function ProductDetailPage() {
     fetchProduct();
   }, [id, navigate]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      message.warning("Please login to add items to cart");
+      navigate(ROUTES.LOGIN);
+      return;
+    }
+
     if (!selectedVariant) {
       message.warning("Please select a variant");
       return;
@@ -92,10 +101,8 @@ export default function ProductDetailPage() {
       return;
     }
 
-    // TODO: Implement cart functionality
-    message.success(
-      `Added ${quantity} item(s) to cart: ${product.name} - ${selectedVariant.color} ${selectedVariant.storage}`
-    );
+    // Add to cart via cart store
+    await addToCart(product._id, selectedVariant._id, quantity);
   };
 
   const formatPrice = (price) => {
@@ -111,24 +118,6 @@ export default function ProductDetailPage() {
 
   const getVariantByOptions = (color, storage) => {
     return variants.find((v) => v.color === color && v.storage === storage);
-  };
-
-  // Get available colors for selected storage
-  const getAvailableColors = () => {
-    if (!selectedVariant?.storage) return colors;
-    return colors.filter((color) => {
-      const variant = getVariantByOptions(color, selectedVariant.storage);
-      return variant && variant.is_active && variant.stock > 0;
-    });
-  };
-
-  // Get available storages for selected color
-  const getAvailableStorages = () => {
-    if (!selectedVariant?.color) return storages;
-    return storages.filter((storage) => {
-      const variant = getVariantByOptions(selectedVariant.color, storage);
-      return variant && variant.is_active && variant.stock > 0;
-    });
   };
 
   // Check if a color is available for current storage selection
@@ -427,6 +416,7 @@ export default function ProductDetailPage() {
                       icon={<ShoppingCartOutlined className="text-lg" />}
                       onClick={handleAddToCart}
                       disabled={!selectedVariant || selectedVariant.stock === 0}
+                      loading={cartLoading}
                       className="!flex-[2] !h-12 !text-base !font-bold !bg-apple-blue hover:!bg-apple-blue-light !border-none shadow-lg shadow-apple-blue/50 hover:shadow-apple-blue/70 transition-all duration-300"
                     >
                       Add to Cart

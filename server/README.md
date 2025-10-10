@@ -124,6 +124,49 @@ Swagger UI cung cấp:
 | PUT    | `/api/users/:id` | Cập nhật user              | Private       |
 | DELETE | `/api/users/:id` | Xóa user                   | Private/Admin |
 
+### Category Routes
+
+| Method | Endpoint              | Description           | Access        |
+| ------ | --------------------- | --------------------- | ------------- |
+| GET    | `/api/categories`     | Lấy tất cả danh mục   | Public        |
+| GET    | `/api/categories/:id` | Lấy chi tiết danh mục | Public        |
+| POST   | `/api/categories`     | Tạo danh mục mới      | Private/Admin |
+| PUT    | `/api/categories/:id` | Cập nhật danh mục     | Private/Admin |
+| DELETE | `/api/categories/:id` | Xóa danh mục          | Private/Admin |
+
+### Product Routes
+
+| Method | Endpoint                     | Description                | Access        |
+| ------ | ---------------------------- | -------------------------- | ------------- |
+| GET    | `/api/products`              | Lấy danh sách sản phẩm     | Public        |
+| GET    | `/api/products/:id`          | Lấy chi tiết sản phẩm      | Public        |
+| GET    | `/api/products/category/:id` | Lấy sản phẩm theo danh mục | Public        |
+| POST   | `/api/products`              | Tạo sản phẩm mới           | Private/Admin |
+| PUT    | `/api/products/:id`          | Cập nhật sản phẩm          | Private/Admin |
+| DELETE | `/api/products/:id`          | Xóa sản phẩm               | Private/Admin |
+
+### Product Variant Routes
+
+| Method | Endpoint                            | Description           | Access        |
+| ------ | ----------------------------------- | --------------------- | ------------- |
+| GET    | `/api/products/:productId/variants` | Lấy biến thể sản phẩm | Public        |
+| POST   | `/api/products/:productId/variants` | Tạo biến thể mới      | Private/Admin |
+| PUT    | `/api/variants/:id`                 | Cập nhật biến thể     | Private/Admin |
+| DELETE | `/api/variants/:id`                 | Xóa biến thể          | Private/Admin |
+
+### Cart Routes (🆕 NEW)
+
+| Method | Endpoint          | Description                       | Access  |
+| ------ | ----------------- | --------------------------------- | ------- |
+| GET    | `/api/cart`       | Lấy giỏ hàng của user             | Private |
+| GET    | `/api/cart/count` | Lấy số lượng items trong giỏ hàng | Private |
+| POST   | `/api/cart`       | Thêm sản phẩm vào giỏ hàng        | Private |
+| PUT    | `/api/cart/:id`   | Cập nhật số lượng item trong giỏ  | Private |
+| DELETE | `/api/cart/:id`   | Xóa item khỏi giỏ hàng            | Private |
+| DELETE | `/api/cart`       | Xóa toàn bộ giỏ hàng              | Private |
+
+**📖 Chi tiết Cart API:** [CART_API_DOCUMENTATION.md](./CART_API_DOCUMENTATION.md)
+
 ## Request Examples
 
 ### Register

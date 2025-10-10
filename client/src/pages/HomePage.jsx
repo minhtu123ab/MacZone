@@ -180,6 +180,7 @@ export default function HomePage() {
                   type="primary"
                   size="large"
                   icon={<ShoppingOutlined />}
+                  onClick={() => navigate("/products")}
                   className="!h-12 !px-8 !font-semibold glow hover:shadow-glow-lg transition-all duration-300"
                 >
                   Start Shopping
@@ -313,7 +314,7 @@ export default function HomePage() {
       <div className="py-20 bg-premium-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <CTASection
-            onAction={() => console.log("CTA clicked")}
+            onAction={() => navigate("/products")}
             isAuthenticated={isAuthenticated}
           />
         </div>

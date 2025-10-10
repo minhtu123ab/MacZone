@@ -102,4 +102,14 @@ export const variantAPI = {
   updateStock: (id, stock) => api.patch(`/variants/${id}/stock`, { stock }),
 };
 
+// Cart APIs
+export const cartAPI = {
+  getCart: () => api.get("/cart"),
+  getCartCount: () => api.get("/cart/count"),
+  addToCart: (data) => api.post("/cart", data),
+  updateCartItem: (itemId, data) => api.put(`/cart/${itemId}`, data),
+  removeCartItem: (itemId) => api.delete(`/cart/${itemId}`),
+  clearCart: () => api.delete("/cart"),
+};
+
 export default api;

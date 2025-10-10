@@ -7,6 +7,9 @@ import ProfilePage from "./pages/ProfilePage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import CartPage from "./pages/CartPage";
+import FloatingCartButton from "./components/common/FloatingCartButton";
+import CartDrawer from "./components/features/cart/CartDrawer";
 import "./App.css";
 
 const { Content } = Layout;
@@ -23,7 +26,14 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
+
+        {/* Floating Cart Button - Always visible on all pages */}
+        <FloatingCartButton />
+
+        {/* Cart Drawer */}
+        <CartDrawer />
       </Content>
     </Layout>
   );
