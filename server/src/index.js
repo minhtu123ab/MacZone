@@ -5,11 +5,16 @@ import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
+import path from "path";
+import { fileURLToPath } from "url";
 import connectDB from "./config/database.js";
 import swaggerSpec from "./config/swagger.js";
 
-// Load environment variables
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables from server/.env
+dotenv.config({ path: path.join(__dirname, "../.env") });
 
 // Initialize Express app
 const app = express();
@@ -65,6 +70,7 @@ import variantRoutes from "./routes/variant.routes.js";
 import productImageRoutes from "./routes/productImage.routes.js";
 import imageRoutes from "./routes/image.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
+import chatbotRoutes from "./routes/chatbot.routes.js";
 
 // Use routes
 app.use("/api/auth", authRoutes);
@@ -75,6 +81,7 @@ app.use("/api/products/:productId/images", productImageRoutes);
 app.use("/api/variants", variantRoutes);
 app.use("/api/images", imageRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/chatbot", chatbotRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

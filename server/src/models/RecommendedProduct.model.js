@@ -12,6 +12,19 @@ const recommendedProductSchema = new mongoose.Schema(
       ref: "Product",
       required: [true, "Please provide a product"],
     },
+    variant_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ProductVariant",
+    },
+    price: {
+      type: Number,
+    },
+    storage: {
+      type: String,
+    },
+    color: {
+      type: String,
+    },
     rank: {
       type: Number,
       required: [true, "Please provide a rank"],

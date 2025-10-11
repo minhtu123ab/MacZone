@@ -50,11 +50,29 @@ export default function FloatingCartButton() {
           {/* Shine effect */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500"></div>
 
-          {/* Icon */}
+          {/* Shopping Cart Icon */}
           <ShoppingCartOutlined
-            className="text-white relative z-10 group-hover:animate-bounce transition-all"
-            style={{ fontSize: "28px" }}
+            className="text-white relative z-10 group-hover:scale-110 transition-all"
+            style={{ fontSize: "32px" }}
           />
+
+          {/* Shine sparkles */}
+          {cartCount > 0 && (
+            <>
+              <div
+                className="absolute top-2 left-2 text-yellow-300 animate-pulse"
+                style={{ fontSize: "10px" }}
+              >
+                ✨
+              </div>
+              <div
+                className="absolute bottom-3 right-2 text-orange-300 animate-pulse"
+                style={{ fontSize: "8px", animationDelay: "0.3s" }}
+              >
+                ✨
+              </div>
+            </>
+          )}
 
           {/* Ripple effect on hover */}
           <div className="absolute inset-0 rounded-full border-4 border-white/30 scale-100 group-hover:scale-125 group-hover:opacity-0 transition-all duration-500"></div>

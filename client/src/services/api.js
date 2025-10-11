@@ -112,4 +112,15 @@ export const cartAPI = {
   clearCart: () => api.delete("/cart"),
 };
 
+// Chatbot APIs
+export const chatbotAPI = {
+  start: () => api.post("/chatbot/start"),
+  getPriceRanges: (categoryId) =>
+    api.get("/chatbot/price-ranges", { params: { categoryId } }),
+  getStoryRequest: (data) => api.post("/chatbot/story-request", data),
+  getRecommendations: (data) => api.post("/chatbot/recommend", data),
+  getHistory: (params) => api.get("/chatbot/history", { params }),
+  getHistoryDetail: (id) => api.get(`/chatbot/history/${id}`),
+};
+
 export default api;

@@ -9,7 +9,9 @@ import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import FloatingCartButton from "./components/common/FloatingCartButton";
+import FloatingChatButton from "./components/common/FloatingChatButton";
 import CartDrawer from "./components/features/cart/CartDrawer";
+import ChatbotDrawer from "./components/features/chatbot/ChatbotDrawer";
 import "./App.css";
 
 const { Content } = Layout;
@@ -29,11 +31,13 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
         </Routes>
 
-        {/* Floating Cart Button - Always visible on all pages */}
+        {/* Floating Buttons - Always visible on all pages */}
         <FloatingCartButton />
+        <FloatingChatButton />
 
-        {/* Cart Drawer */}
+        {/* Drawers */}
         <CartDrawer />
+        <ChatbotDrawer />
       </Content>
     </Layout>
   );

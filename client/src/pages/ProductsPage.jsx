@@ -12,8 +12,13 @@ import {
   Pagination,
   message,
   Button,
+  Breadcrumb,
 } from "antd";
-import { SearchOutlined, FilterOutlined } from "@ant-design/icons";
+import {
+  SearchOutlined,
+  FilterOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
 import PageLayout from "../components/layout/PageLayout";
 import { productAPI, categoryAPI } from "../services/api";
 import { ROUTES } from "../constants";
@@ -142,16 +147,22 @@ export default function ProductsPage() {
     <PageLayout>
       <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header with Back Button */}
-          <div className="mb-12">
-            <Button
-              type="text"
-              onClick={() => navigate(ROUTES.HOME)}
-              className="!text-apple-blue-light hover:!text-apple-blue-light mb-8"
-            >
-              ← Back to Home
-            </Button>
+          {/* Breadcrumb */}
+          <Breadcrumb
+            className="mb-8"
+            items={[
+              {
+                href: ROUTES.HOME,
+                title: <HomeOutlined className="text-apple-blue" />,
+              },
+              {
+                title: <span className="text-white">Products</span>,
+              },
+            ]}
+          />
 
+          {/* Header */}
+          <div className="mb-12">
             <div className="text-center mb-4">
               <div className="inline-flex items-center justify-center gap-4 mb-4">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-apple-blue to-blue-600 flex items-center justify-center shadow-lg shadow-apple-blue/50">
