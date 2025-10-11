@@ -11,6 +11,10 @@ import {
   GlobalOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "../hooks/useAuth";
+import {
+  useScrollAnimation,
+  useStaggerAnimation,
+} from "../hooks/useScrollAnimation";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import FeatureCard from "../components/common/FeatureCard";
@@ -30,6 +34,22 @@ export default function HomePage() {
   const { user, isAuthenticated } = useAuth();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Scroll animation hooks for different sections
+  const trustBadgesAnimation = useScrollAnimation({ threshold: 0.2 });
+  const productShowcaseAnimation = useScrollAnimation({ threshold: 0.15 });
+  const statsAnimation = useScrollAnimation({ threshold: 0.2 });
+  const testimonialsAnimation = useScrollAnimation({ threshold: 0.15 });
+  const newsletterAnimation = useScrollAnimation({ threshold: 0.2 });
+  const ctaAnimation = useScrollAnimation({ threshold: 0.2 });
+
+  // Staggered animations for grid items
+  const featureAnimations = useStaggerAnimation(3, { staggerDelay: 150 });
+  const trustBadgeAnimations = useStaggerAnimation(4, { staggerDelay: 100 });
+  const categoryAnimations = useStaggerAnimation(categories.length, {
+    staggerDelay: 120,
+  });
+  const testimonialAnimations = useStaggerAnimation(3, { staggerDelay: 200 });
 
   // Fetch categories from API
   useEffect(() => {
@@ -192,32 +212,62 @@ export default function HomePage() {
           {/* Features */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
             {features.map((feature, index) => (
-              <FeatureCard
+              <div
                 key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-              />
+                ref={featureAnimations[index].ref}
+                className={`scroll-animate ${
+                  featureAnimations[index].isVisible ? "animate-fade-up" : ""
+                }`}
+                style={{
+                  animationDelay: `${featureAnimations[index].delay}ms`,
+                }}
+              >
+                <FeatureCard
+                  icon={feature.icon}
+                  title={feature.title}
+                  description={feature.description}
+                />
+              </div>
             ))}
           </div>
         </div>
       </div>
 
       {/* Trust Badges Section */}
-      <div className="py-16 bg-dark-card">
+      <div ref={trustBadgesAnimation.ref} className="py-16 bg-dark-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {trustBadges.map((badge, index) => (
-              <TrustBadge key={index} icon={badge.icon} label={badge.label} />
+              <div
+                key={index}
+                ref={trustBadgeAnimations[index].ref}
+                className={`scroll-animate ${
+                  trustBadgeAnimations[index].isVisible
+                    ? "animate-scale-in"
+                    : ""
+                }`}
+                style={{
+                  animationDelay: `${trustBadgeAnimations[index].delay}ms`,
+                }}
+              >
+                <TrustBadge icon={badge.icon} label={badge.label} />
+              </div>
             ))}
           </div>
         </div>
       </div>
 
       {/* Product Showcase Section */}
-      <div className="py-20 bg-premium-gradient">
+      <div
+        ref={productShowcaseAnimation.ref}
+        className="py-20 bg-premium-gradient"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div
+            className={`text-center mb-12 scroll-animate ${
+              productShowcaseAnimation.isVisible ? "animate-fade-down" : ""
+            }`}
+          >
             <Title level={2} className="!text-4xl !font-bold !text-white !mb-4">
               Shop Premium Apple Products
             </Title>
@@ -232,14 +282,30 @@ export default function HomePage() {
             </div>
           ) : categories.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {categories.map((category) => (
-                <ProductCard
+              {categories.map((category, index) => (
+                <div
                   key={category._id}
-                  name={category.name}
-                  image={category.image}
-                  description={category.description}
-                  onClick={() => navigate(`/products?category=${category._id}`)}
-                />
+                  ref={categoryAnimations[index]?.ref}
+                  className={`scroll-animate ${
+                    categoryAnimations[index]?.isVisible
+                      ? "animate-zoom-in"
+                      : ""
+                  }`}
+                  style={{
+                    animationDelay: `${
+                      categoryAnimations[index]?.delay || 0
+                    }ms`,
+                  }}
+                >
+                  <ProductCard
+                    name={category.name}
+                    image={category.image}
+                    description={category.description}
+                    onClick={() =>
+                      navigate(`/products?category=${category._id}`)
+                    }
+                  />
+                </div>
               ))}
             </div>
           ) : (
@@ -253,9 +319,13 @@ export default function HomePage() {
       </div>
 
       {/* Stats Section */}
-      <div className="py-20 bg-dark-card">
+      <div ref={statsAnimation.ref} className="py-20 bg-dark-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div
+            className={`text-center mb-12 scroll-animate ${
+              statsAnimation.isVisible ? "animate-fade-down" : ""
+            }`}
+          >
             <Title level={2} className="!text-4xl !font-bold !text-white !mb-4">
               Trusted by Thousands
             </Title>
@@ -266,21 +336,39 @@ export default function HomePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <StatCard
+              <div
                 key={index}
-                number={stat.number}
-                label={stat.label}
-                suffix={stat.suffix}
-              />
+                className={`${
+                  statsAnimation.isVisible ? "animate-bounce-in" : "opacity-0"
+                }`}
+                style={{
+                  animationDelay: statsAnimation.isVisible
+                    ? `${index * 150}ms`
+                    : "0ms",
+                }}
+              >
+                <StatCard
+                  number={stat.number}
+                  label={stat.label}
+                  suffix={stat.suffix}
+                />
+              </div>
             ))}
           </div>
         </div>
       </div>
 
       {/* Testimonials Section */}
-      <div className="py-20 bg-premium-gradient">
+      <div
+        ref={testimonialsAnimation.ref}
+        className="py-20 bg-premium-gradient"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div
+            className={`text-center mb-12 scroll-animate ${
+              testimonialsAnimation.isVisible ? "animate-fade-down" : ""
+            }`}
+          >
             <Title level={2} className="!text-4xl !font-bold !text-white !mb-4">
               What Our Customers Say
             </Title>
@@ -291,32 +379,56 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
-              <TestimonialCard
+              <div
                 key={index}
-                name={testimonial.name}
-                role={testimonial.role}
-                rating={testimonial.rating}
-                comment={testimonial.comment}
-              />
+                ref={testimonialAnimations[index].ref}
+                className={`scroll-animate ${
+                  testimonialAnimations[index].isVisible
+                    ? "animate-fade-up"
+                    : ""
+                }`}
+                style={{
+                  animationDelay: `${testimonialAnimations[index].delay}ms`,
+                }}
+              >
+                <TestimonialCard
+                  name={testimonial.name}
+                  role={testimonial.role}
+                  rating={testimonial.rating}
+                  comment={testimonial.comment}
+                />
+              </div>
             ))}
           </div>
         </div>
       </div>
 
       {/* Newsletter Section */}
-      <div className="py-20 bg-dark-card">
+      <div ref={newsletterAnimation.ref} className="py-20 bg-dark-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <NewsletterSection />
+          <div
+            className={`scroll-animate ${
+              newsletterAnimation.isVisible ? "animate-scale-in" : ""
+            }`}
+          >
+            <NewsletterSection />
+          </div>
         </div>
       </div>
 
       {/* CTA Section */}
-      <div className="py-20 bg-premium-gradient">
+      <div ref={ctaAnimation.ref} className="py-20 bg-premium-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <CTASection
-            onAction={() => navigate("/products")}
-            isAuthenticated={isAuthenticated}
-          />
+          <div
+            className={`scroll-animate ${
+              ctaAnimation.isVisible ? "animate-fade-up" : ""
+            }`}
+          >
+            <CTASection
+              onAction={() => navigate("/products")}
+              isAuthenticated={isAuthenticated}
+            />
+          </div>
         </div>
       </div>
 
