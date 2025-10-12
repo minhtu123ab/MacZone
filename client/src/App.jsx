@@ -8,6 +8,9 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import OrdersPage from "./pages/OrdersPage";
+import OrderDetailPage from "./pages/OrderDetailPage";
 import FloatingCartButton from "./components/common/FloatingCartButton";
 import FloatingChatButton from "./components/common/FloatingChatButton";
 import CartDrawer from "./components/features/cart/CartDrawer";
@@ -29,6 +32,9 @@ function App() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/orders/:orderId" element={<OrderDetailPage />} />
         </Routes>
 
         {/* Floating Buttons - Always visible on all pages */}

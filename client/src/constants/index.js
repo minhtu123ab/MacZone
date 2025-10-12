@@ -13,7 +13,9 @@ export const ROUTES = {
   PRODUCT_DETAIL: (id) => `/products/${id}`,
   PRODUCTS_BY_CATEGORY: (categoryId) => `/products?category=${categoryId}`,
   CART: "/cart",
+  CHECKOUT: "/checkout",
   ORDERS: "/orders",
+  ORDER_DETAIL: (id) => `/orders/${id}`,
 };
 
 // API endpoints

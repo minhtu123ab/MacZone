@@ -7,29 +7,60 @@ const orderSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "Please provide a user"],
     },
-    total_price: {
-      type: Number,
-      required: [true, "Please provide total price"],
-      min: [0, "Total price cannot be negative"],
-    },
-    status: {
+    customer_name: {
       type: String,
-      enum: ["pending", "confirmed", "shipping", "completed", "canceled"],
-      default: "pending",
+      required: [true, "Please provide customer name"],
+      trim: true,
     },
-    payment_status: {
+    phone_number: {
       type: String,
-      enum: ["unpaid", "paid", "refunded"],
-      default: "unpaid",
+      required: [true, "Please provide phone number"],
+      trim: true,
     },
     shipping_address: {
       type: String,
       required: [true, "Please provide shipping address"],
       trim: true,
     },
+    note: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    total_price: {
+      type: Number,
+      required: [true, "Please provide total price"],
+      min: [0, "Total price cannot be negative"],
+    },
+    payment_method: {
+      type: String,
+      enum: ["COD", "banking", "credit_card"],
+      default: "COD",
+    },
+    payment_status: {
+      type: String,
+      enum: ["unpaid", "paid", "refunded"],
+      default: "unpaid",
+    },
+    status: {
+      type: String,
+      enum: ["pending", "confirmed", "shipping", "completed", "canceled"],
+      default: "pending",
+    },
     tracking_code: {
       type: String,
       trim: true,
+    },
+    transfer_reference: {
+      type: String,
+      trim: true,
+    },
+    canceled_reason: {
+      type: String,
+      trim: true,
+    },
+    canceled_at: {
+      type: Date,
     },
   },
   {

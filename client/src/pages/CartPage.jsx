@@ -67,8 +67,7 @@ export default function CartPage() {
   };
 
   const handleCheckout = () => {
-    // TODO: Implement checkout
-    console.log("Proceeding to checkout...");
+    navigate(ROUTES.CHECKOUT);
   };
 
   if (loading && !cart) {

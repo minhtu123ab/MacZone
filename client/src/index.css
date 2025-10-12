@@ -318,3 +318,21 @@ code {
 .delay-800 {
   animation-delay: 800ms;
 }
+
+/* Order Tabs - Spread out evenly */
+.order-tabs-wrapper .ant-tabs-nav {
+  width: 100%;
+}
+
+.order-tabs-wrapper .ant-tabs-nav-list {
+  width: 100%;
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.order-tabs-wrapper .ant-tabs-tab {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin: 0 !important;
+}

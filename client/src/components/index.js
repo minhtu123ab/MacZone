@@ -10,6 +10,12 @@ export { default as OTPInput } from "./common/OTPInput";
 export { default as TestimonialCard } from "./common/TestimonialCard";
 export { default as StatCard } from "./common/StatCard";
 export { default as TrustBadge } from "./common/TrustBadge";
+export { default as OrderCard } from "./common/OrderCard";
+export { default as OrderStatusBadge } from "./common/OrderStatusBadge";
+export { default as PaymentStatusBadge } from "./common/PaymentStatusBadge";
+export { default as CartBadge } from "./common/CartBadge";
+export { default as FloatingCartButton } from "./common/FloatingCartButton";
+export { default as FloatingChatButton } from "./common/FloatingChatButton";
 
 // Auth Components
 export { default as LoginForm } from "./features/auth/LoginForm";

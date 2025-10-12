@@ -123,4 +123,19 @@ export const chatbotAPI = {
   getHistoryDetail: (id) => api.get(`/chatbot/history/${id}`),
 };
 
+// Order APIs
+export const orderAPI = {
+  createOrder: (data) => api.post("/orders", data),
+  getUserOrders: (params) => api.get("/orders", { params }),
+  getOrderById: (orderId) => api.get(`/orders/${orderId}`),
+  cancelOrder: (orderId, data) => api.put(`/orders/${orderId}/cancel`, data),
+  updateOrderStatus: (orderId, data) =>
+    api.put(`/orders/${orderId}/status`, data),
+  updatePaymentStatus: (orderId, data) =>
+    api.put(`/orders/${orderId}/payment`, data),
+  updateTrackingCode: (orderId, data) =>
+    api.put(`/orders/${orderId}/tracking`, data),
+  getAllOrders: (params) => api.get("/orders/admin/all", { params }),
+};
+
 export default api;

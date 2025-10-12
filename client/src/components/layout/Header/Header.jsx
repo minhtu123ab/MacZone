@@ -6,6 +6,8 @@ import {
   LogoutOutlined,
   SettingOutlined,
   AppleOutlined,
+  ShoppingOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import useAuthStore from "../../../store/useAuthStore";
 import useCartStore from "../../../store/useCartStore";
@@ -44,6 +46,12 @@ export default function Header() {
       case "profile":
         navigate("/profile");
         break;
+      case "cart":
+        navigate("/cart");
+        break;
+      case "orders":
+        navigate("/orders");
+        break;
       case "settings":
         console.log("Settings clicked");
         break;
@@ -62,6 +70,16 @@ export default function Header() {
       key: "profile",
       icon: <UserOutlined />,
       label: "Profile",
+    },
+    {
+      key: "cart",
+      icon: <ShoppingCartOutlined />,
+      label: "My Cart",
+    },
+    {
+      key: "orders",
+      icon: <ShoppingOutlined />,
+      label: "My Orders",
     },
     {
       key: "settings",
