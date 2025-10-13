@@ -9,7 +9,14 @@ const emailLogSchema = new mongoose.Schema(
     },
     email_type: {
       type: String,
-      enum: ["forgot_password", "order_success", "other"],
+      enum: [
+        "forgot_password",
+        "order_confirmation",
+        "order_completed",
+        "order_canceled",
+        "order_success",
+        "other",
+      ],
       required: [true, "Please provide email type"],
     },
     subject: {

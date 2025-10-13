@@ -163,6 +163,15 @@ export const updateUserValidation = [
     .withMessage("Role must be either user or admin"),
 ];
 
+// Validation for updating user role
+export const updateUserRoleValidation = [
+  body("role")
+    .notEmpty()
+    .withMessage("Role is required")
+    .isIn(["user", "admin"])
+    .withMessage("Role must be either user or admin"),
+];
+
 // Validation for change password
 export const changePasswordValidation = [
   body("current_password")
