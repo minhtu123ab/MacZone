@@ -6,6 +6,8 @@ import {
   updateProduct,
   deleteProduct,
   getProductsByCategory,
+  getProductStats,
+  getAllProductsAdmin,
 } from "../controllers/product.controller.js";
 import { protect, authorize } from "../middleware/auth.middleware.js";
 import {
@@ -14,6 +16,67 @@ import {
 } from "../middleware/validator.middleware.js";
 
 const router = express.Router();
+
+// ========== ADMIN STATS ROUTE (must be before /:id route) ==========
+
+/**
+ * @swagger
+ * /api/products/admin/stats:
+ *   get:
+ *     summary: Get product statistics (Admin only)
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Statistics retrieved successfully
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         $ref: '#/components/responses/ForbiddenError'
+ */
+router.get("/admin/stats", protect, authorize("admin"), getProductStats);
+
+/**
+ * @swagger
+ * /api/products/admin/all:
+ *   get:
+ *     summary: Get all products for admin (with filters, no default active filter)
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Items per page
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search by product name
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *         description: Filter by category ID
+ *       - in: query
+ *         name: is_active
+ *         schema:
+ *           type: string
+ *           enum: ['true', 'false', '']
+ *         description: Filter by active status (empty string shows all)
+ *     responses:
+ *       200:
+ *         description: Products retrieved successfully
+ */
+router.get("/admin/all", protect, authorize("admin"), getAllProductsAdmin);
 
 // ========== PUBLIC ROUTES ==========
 

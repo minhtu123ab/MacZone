@@ -320,7 +320,7 @@ export const updateReview = async (req, res, next) => {
 
 // @desc    Delete review
 // @route   DELETE /api/reviews/:reviewId
-// @access  Private
+// @access  Private (User can delete own review, Admin can delete any review)
 export const deleteReview = async (req, res, next) => {
   try {
     const { reviewId } = req.params;
@@ -335,8 +335,11 @@ export const deleteReview = async (req, res, next) => {
       });
     }
 
-    // Check if review belongs to user
-    if (review.user_id.toString() !== req.user._id.toString()) {
+    // Check if review belongs to user or user is admin
+    if (
+      review.user_id.toString() !== req.user._id.toString() &&
+      req.user.role !== "admin"
+    ) {
       return res.status(403).json({
         success: false,
         message: "Not authorized to delete this review",
@@ -556,6 +559,49 @@ export const getFeaturedReviews = async (req, res, next) => {
         comment: review.comment,
         createdAt: review.createdAt,
       })),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get all reviews (Admin only)
+// @route   GET /api/reviews
+// @access  Private/Admin
+export const getAllReviews = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 10, rating, sort = "-createdAt" } = req.query;
+
+    // Build query
+    const query = {};
+    if (rating) {
+      query.rating = parseInt(rating);
+    }
+
+    // Execute query with pagination
+    const reviews = await Review.find(query)
+      .populate({
+        path: "user_id",
+        select: "full_name email",
+      })
+      .populate({
+        path: "product_id",
+        select: "name thumbnail_url",
+      })
+      .sort(sort)
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+
+    // Get total count
+    const count = await Review.countDocuments(query);
+
+    res.status(200).json({
+      success: true,
+      count: reviews.length,
+      total: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page * 1,
+      data: reviews,
     });
   } catch (error) {
     next(error);

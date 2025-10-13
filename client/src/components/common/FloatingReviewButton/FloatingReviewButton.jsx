@@ -38,17 +38,17 @@ export default function FloatingReviewButton() {
         showZero={false}
         offset={[-5, 5]}
         style={{
-          backgroundColor: "#f59e0b",
-          boxShadow: "0 4px 12px rgba(245, 158, 11, 0.5)",
+          backgroundColor: "#3b82f6",
+          boxShadow: "0 4px 12px rgba(59, 130, 246, 0.5)",
           fontWeight: "bold",
         }}
       >
         <button
           onClick={handleClick}
-          className="relative w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:via-orange-600 hover:to-amber-700 transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center border-none cursor-pointer overflow-hidden"
+          className="relative w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center border-none cursor-pointer overflow-hidden"
           style={{
             boxShadow:
-              "0 10px 40px rgba(245, 158, 11, 0.5), 0 0 0 0 rgba(245, 158, 11, 0.4)",
+              "0 10px 40px rgba(59, 130, 246, 0.5), 0 0 0 0 rgba(59, 130, 246, 0.4)",
           }}
         >
           {/* Animated background pulse */}
@@ -67,16 +67,20 @@ export default function FloatingReviewButton() {
           {reviewableCount > 0 && (
             <>
               <div
-                className="absolute top-2 left-2 text-yellow-200 animate-pulse"
-                style={{ fontSize: "10px" }}
+                className="absolute top-2 left-2 animate-pulse"
+                style={{ fontSize: "10px", color: "#60a5fa" }}
               >
-                ⭐
+                ★
               </div>
               <div
-                className="absolute bottom-3 right-2 text-yellow-100 animate-pulse"
-                style={{ fontSize: "8px", animationDelay: "0.3s" }}
+                className="absolute bottom-3 right-2 animate-pulse"
+                style={{
+                  fontSize: "8px",
+                  animationDelay: "0.3s",
+                  color: "#93c5fd",
+                }}
               >
-                ⭐
+                ★
               </div>
             </>
           )}
@@ -88,9 +92,10 @@ export default function FloatingReviewButton() {
 
       {/* Tooltip hint */}
       {reviewableCount > 0 && (
-        <div className="absolute -top-14 right-0 bg-gradient-to-r from-amber-900 to-orange-800 text-white px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-white/10">
-          ⭐ {reviewableCount} product{reviewableCount > 1 ? "s" : ""} to review
-          <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-amber-900 transform rotate-45 border-r border-b border-white/10"></div>
+        <div className="absolute -top-14 right-0 bg-gradient-to-r from-blue-900 to-blue-700 text-white px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-white/10">
+          <span style={{ color: "#60a5fa" }}>★</span> {reviewableCount} product
+          {reviewableCount > 1 ? "s" : ""} to review
+          <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-blue-900 transform rotate-45 border-r border-b border-white/10"></div>
         </div>
       )}
     </div>

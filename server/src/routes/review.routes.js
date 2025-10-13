@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { protect } from "../middleware/auth.middleware.js";
+import { protect, authorize } from "../middleware/auth.middleware.js";
 import {
   createReview,
   getProductReviews,
@@ -10,6 +10,7 @@ import {
   getReviewableItems,
   markReviewPrompted,
   getFeaturedReviews,
+  getAllReviews,
 } from "../controllers/review.controller.js";
 
 const router = express.Router();
@@ -49,6 +50,47 @@ const router = express.Router();
  *           type: string
  *           format: date-time
  */
+
+/**
+ * @swagger
+ * /api/reviews:
+ *   get:
+ *     summary: Get all reviews (Admin only)
+ *     tags: [Reviews]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *       - in: query
+ *         name: rating
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 5
+ *         description: Filter by rating
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *           default: -createdAt
+ *     responses:
+ *       200:
+ *         description: List of all reviews
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Not authorized (admin only)
+ */
+router.get("/", protect, authorize("admin"), getAllReviews);
 
 /**
  * @swagger
@@ -333,6 +375,7 @@ router.put(
  * /api/reviews/{reviewId}:
  *   delete:
  *     summary: Delete a review
+ *     description: Users can delete their own reviews. Admins can delete any review.
  *     tags: [Reviews]
  *     security:
  *       - bearerAuth: []

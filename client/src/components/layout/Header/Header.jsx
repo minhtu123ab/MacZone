@@ -8,6 +8,7 @@ import {
   AppleOutlined,
   ShoppingOutlined,
   ShoppingCartOutlined,
+  DashboardOutlined,
 } from "@ant-design/icons";
 import useAuthStore from "../../../store/useAuthStore";
 import useCartStore from "../../../store/useCartStore";
@@ -43,6 +44,9 @@ export default function Header() {
     setDropdownVisible(false);
 
     switch (key) {
+      case "admin":
+        navigate("/admin");
+        break;
       case "profile":
         navigate("/profile");
         break;
@@ -65,7 +69,22 @@ export default function Header() {
     }
   };
 
+  // Build menu items based on user role
   const menuItems = [
+    // Admin Dashboard (only for admin users)
+    ...(user?.role === "admin"
+      ? [
+          {
+            key: "admin",
+            icon: <DashboardOutlined />,
+            label: "Admin Panel",
+            style: { color: "#1890ff", fontWeight: 600 },
+          },
+          {
+            type: "divider",
+          },
+        ]
+      : []),
     {
       key: "profile",
       icon: <UserOutlined />,

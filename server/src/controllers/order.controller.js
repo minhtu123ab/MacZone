@@ -783,3 +783,83 @@ export const getAllOrders = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Get order statistics (Admin dashboard)
+// @route   GET /api/orders/admin/stats
+// @access  Private/Admin
+export const getOrderStats = async (req, res, next) => {
+  try {
+    // Total orders
+    const totalOrders = await Order.countDocuments();
+
+    // Pending orders
+    const pendingOrders = await Order.countDocuments({ status: "pending" });
+
+    // Total revenue (completed orders only)
+    const revenueData = await Order.aggregate([
+      { $match: { status: "completed" } },
+      { $group: { _id: null, total: { $sum: "$total_price" } } },
+    ]);
+    const totalRevenue = revenueData[0]?.total || 0;
+
+    // Revenue this month
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    const revenueThisMonth = await Order.aggregate([
+      {
+        $match: {
+          status: "completed",
+          createdAt: { $gte: startOfMonth },
+        },
+      },
+      { $group: { _id: null, total: { $sum: "$total_price" } } },
+    ]);
+
+    // Revenue last month
+    const startOfLastMonth = new Date(startOfMonth);
+    startOfLastMonth.setMonth(startOfLastMonth.getMonth() - 1);
+    const endOfLastMonth = new Date(startOfMonth);
+    endOfLastMonth.setDate(0);
+    endOfLastMonth.setHours(23, 59, 59, 999);
+
+    const revenueLastMonth = await Order.aggregate([
+      {
+        $match: {
+          status: "completed",
+          createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth },
+        },
+      },
+      { $group: { _id: null, total: { $sum: "$total_price" } } },
+    ]);
+
+    const thisMonthRevenue = revenueThisMonth[0]?.total || 0;
+    const lastMonthRevenue = revenueLastMonth[0]?.total || 0;
+    const revenueGrowth =
+      lastMonthRevenue > 0
+        ? Math.round(
+            ((thisMonthRevenue - lastMonthRevenue) / lastMonthRevenue) * 100
+          )
+        : 0;
+
+    // Recent orders
+    const recentOrders = await Order.find()
+      .sort("-createdAt")
+      .limit(5)
+      .select("_id customer_name total_price status createdAt");
+
+    res.status(200).json({
+      success: true,
+      data: {
+        totalOrders,
+        pendingOrders,
+        totalRevenue,
+        revenueGrowth,
+        recentOrders,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

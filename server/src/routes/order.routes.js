@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { protect } from "../middleware/auth.middleware.js";
+import { protect, authorize } from "../middleware/auth.middleware.js";
 import {
   createOrder,
   getUserOrders,
@@ -10,6 +10,7 @@ import {
   updatePaymentStatus,
   updateTrackingCode,
   getAllOrders,
+  getOrderStats,
 } from "../controllers/order.controller.js";
 
 const router = express.Router();
@@ -223,6 +224,24 @@ router.get("/", protect, getUserOrders);
 
 /**
  * @swagger
+ * /api/orders/admin/stats:
+ *   get:
+ *     summary: Get order statistics (Admin only)
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Order statistics retrieved successfully
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Not authorized (admin only)
+ */
+router.get("/admin/stats", protect, authorize("admin"), getOrderStats);
+
+/**
+ * @swagger
  * /api/orders/admin/all:
  *   get:
  *     summary: Get all orders (Admin only)
@@ -263,7 +282,7 @@ router.get("/", protect, getUserOrders);
  *       403:
  *         description: Not authorized (admin only)
  */
-router.get("/admin/all", protect, getAllOrders);
+router.get("/admin/all", protect, authorize("admin"), getAllOrders);
 
 /**
  * @swagger
@@ -380,6 +399,7 @@ router.put(
 router.put(
   "/:orderId/status",
   protect,
+  authorize("admin"),
   [
     body("status")
       .notEmpty()
@@ -429,6 +449,7 @@ router.put(
 router.put(
   "/:orderId/payment",
   protect,
+  authorize("admin"),
   [
     body("payment_status")
       .notEmpty()
@@ -478,6 +499,7 @@ router.put(
 router.put(
   "/:orderId/tracking",
   protect,
+  authorize("admin"),
   [
     body("tracking_code")
       .trim()

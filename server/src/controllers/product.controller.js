@@ -23,11 +23,69 @@ export const getProducts = async (req, res, next) => {
     // Build filter object
     const filter = {};
 
-    // Filter by active status (default to true if not specified)
-    if (is_active !== undefined) {
+    // Filter by active status (default to true for public)
+    if (is_active !== undefined && is_active !== "") {
       filter.is_active = is_active === "true";
     } else {
       filter.is_active = true; // Default: only show active products
+    }
+
+    // Filter by category
+    if (category) {
+      filter.category_id = category;
+    }
+
+    // Search by name only (case-insensitive)
+    if (search) {
+      filter.name = { $regex: search, $options: "i" };
+    }
+
+    // Calculate pagination
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+
+    // Execute query
+    const products = await Product.find(filter)
+      .populate("category_id", "name description")
+      .sort(sort)
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    // Get total count for pagination
+    const total = await Product.countDocuments(filter);
+
+    res.status(200).json({
+      success: true,
+      count: products.length,
+      total,
+      page: parseInt(page),
+      pages: Math.ceil(total / parseInt(limit)),
+      data: products,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get all products for admin (with filters, no default active filter)
+// @route   GET /api/products/admin/all
+// @access  Private/Admin
+export const getAllProductsAdmin = async (req, res, next) => {
+  try {
+    const {
+      category,
+      search,
+      sort = "-createdAt",
+      page = 1,
+      limit = 10,
+      is_active,
+    } = req.query;
+
+    // Build filter object
+    const filter = {};
+
+    // Filter by active status (only if explicitly provided)
+    if (is_active !== undefined && is_active !== "") {
+      filter.is_active = is_active === "true";
     }
 
     // Filter by category
@@ -323,6 +381,51 @@ export const getProductsByCategory = async (req, res, next) => {
         message: "Category not found",
       });
     }
+    next(error);
+  }
+};
+
+// @desc    Get product statistics (Admin dashboard)
+// @route   GET /api/products/admin/stats
+// @access  Private/Admin
+export const getProductStats = async (req, res, next) => {
+  try {
+    // Total products
+    const totalProducts = await Product.countDocuments();
+
+    // Active products
+    const activeProducts = await Product.countDocuments({ is_active: true });
+
+    // Products by category
+    const productsByCategory = await Product.aggregate([
+      { $group: { _id: "$category_id", count: { $sum: 1 } } },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "_id",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      { $unwind: "$category" },
+      {
+        $project: {
+          name: "$category.name",
+          count: 1,
+        },
+      },
+      { $sort: { count: -1 } },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        totalProducts,
+        activeProducts,
+        productsByCategory,
+      },
+    });
+  } catch (error) {
     next(error);
   }
 };

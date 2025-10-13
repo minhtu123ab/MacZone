@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "antd";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -18,32 +18,102 @@ import CartDrawer from "./components/features/cart/CartDrawer";
 import ChatbotDrawer from "./components/features/chatbot/ChatbotDrawer";
 import ReviewDrawer from "./components/features/review/ReviewDrawer";
 import OrderReviewModal from "./components/features/review/OrderReviewModal";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import AdminLayout from "./components/layout/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import UserManagement from "./pages/admin/UserManagement";
+import ProductManagement from "./pages/admin/ProductManagement";
+import CategoryManagement from "./pages/admin/CategoryManagement";
+import OrderManagement from "./pages/admin/OrderManagement";
+import ReviewManagement from "./pages/admin/ReviewManagement";
 import "./App.css";
 
 const { Content } = Layout;
 
 function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <Layout className="min-h-screen">
       <Content>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/orders/:orderId" element={<OrderDetailPage />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <ProtectedRoute>
+                <CartPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute>
+                <OrdersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders/:orderId"
+            element={
+              <ProtectedRoute>
+                <OrderDetailPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin Routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requireAdmin>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route path="users" element={<UserManagement />} />
+            <Route path="products" element={<ProductManagement />} />
+            <Route path="categories" element={<CategoryManagement />} />
+            <Route path="orders" element={<OrderManagement />} />
+            <Route path="reviews" element={<ReviewManagement />} />
+          </Route>
         </Routes>
 
-        {/* Floating Buttons - Always visible on all pages */}
-        <FloatingCartButton />
-        <FloatingChatButton />
-        <FloatingReviewButton />
+        {/* Floating Buttons - Hidden on admin pages */}
+        {!isAdminRoute && (
+          <>
+            <FloatingCartButton />
+            <FloatingChatButton />
+            <FloatingReviewButton />
+          </>
+        )}
 
         {/* Drawers & Modals */}
         <CartDrawer />

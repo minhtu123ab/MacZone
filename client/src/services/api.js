@@ -153,4 +153,44 @@ export const reviewAPI = {
   deleteReview: (reviewId) => api.delete(`/reviews/${reviewId}`),
 };
 
+// Admin APIs
+export const adminAPI = {
+  // Dashboard Stats
+  getOrderStats: () => api.get("/orders/admin/stats"),
+  getUserStats: () => api.get("/users/stats"),
+  getProductStats: () => api.get("/products/admin/stats"),
+
+  // User Management
+  getAllUsers: (params) => api.get("/users", { params }),
+  getUserById: (id) => api.get(`/users/${id}`),
+  updateUser: (id, data) => api.put(`/users/${id}`, data),
+  deleteUser: (id) => api.delete(`/users/${id}`),
+  updateUserRole: (id, data) => api.put(`/users/${id}/role`, data),
+
+  // Product Management
+  getAllProducts: (params) => api.get("/products/admin/all", { params }),
+  createProduct: (data) => api.post("/products", data),
+  updateProduct: (id, data) => api.put(`/products/${id}`, data),
+  deleteProduct: (id) => api.delete(`/products/${id}`),
+
+  // Category Management
+  getAllCategories: () => api.get("/categories"),
+  createCategory: (data) => api.post("/categories", data),
+  updateCategory: (id, data) => api.put(`/categories/${id}`, data),
+  deleteCategory: (id) => api.delete(`/categories/${id}`),
+
+  // Order Management
+  getAllOrders: (params) => api.get("/orders/admin/all", { params }),
+  updateOrderStatus: (orderId, data) =>
+    api.put(`/orders/${orderId}/status`, data),
+  updatePaymentStatus: (orderId, data) =>
+    api.put(`/orders/${orderId}/payment`, data),
+  updateTrackingCode: (orderId, data) =>
+    api.put(`/orders/${orderId}/tracking`, data),
+
+  // Review Management
+  getAllReviews: (params) => api.get("/reviews", { params }),
+  deleteReview: (id) => api.delete(`/reviews/${id}`),
+};
+
 export default api;
