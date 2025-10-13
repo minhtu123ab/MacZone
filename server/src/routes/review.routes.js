@@ -11,6 +11,7 @@ import {
   markReviewPrompted,
   getFeaturedReviews,
   getAllReviews,
+  getReviewStats,
 } from "../controllers/review.controller.js";
 
 const router = express.Router();
@@ -50,6 +51,24 @@ const router = express.Router();
  *           type: string
  *           format: date-time
  */
+
+/**
+ * @swagger
+ * /api/reviews/admin/stats:
+ *   get:
+ *     summary: Get review statistics (Admin only)
+ *     tags: [Reviews]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Review statistics retrieved successfully
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Not authorized (admin only)
+ */
+router.get("/admin/stats", protect, authorize("admin"), getReviewStats);
 
 /**
  * @swagger

@@ -9,6 +9,7 @@ import {
   ShoppingOutlined,
   ShoppingCartOutlined,
   DashboardOutlined,
+  CrownOutlined,
 } from "@ant-design/icons";
 import useAuthStore from "../../../store/useAuthStore";
 import useCartStore from "../../../store/useCartStore";
@@ -129,12 +130,20 @@ export default function Header() {
           placement="bottomRight"
           align={{ offset: [0, 8] }}
         >
-          <div className="flex items-center gap-3 glass px-4 py-2 rounded-full cursor-pointer hover:shadow-glow transition-all">
-            <Avatar
-              icon={<UserOutlined />}
-              className="!bg-apple-blue"
-              size="default"
-            />
+          <div className="flex items-center gap-3 glass px-4 py-2 rounded-full cursor-pointer hover:shadow-glow transition-all min-w-52">
+            {user.role === "admin" ? (
+              <Avatar
+                icon={<CrownOutlined />}
+                style={{ backgroundColor: "#faad14" }}
+                size="default"
+              />
+            ) : (
+              <Avatar
+                icon={<UserOutlined />}
+                className="!bg-apple-blue"
+                size="default"
+              />
+            )}
             <div className="flex flex-col">
               <span className="text-white text-sm font-semibold">
                 {user.full_name}

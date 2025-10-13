@@ -792,8 +792,22 @@ export const getOrderStats = async (req, res, next) => {
     // Total orders
     const totalOrders = await Order.countDocuments();
 
-    // Pending orders
-    const pendingOrders = await Order.countDocuments({ status: "pending" });
+    // Orders by status (breakdown)
+    const ordersByStatus = await Order.aggregate([
+      { $group: { _id: "$status", count: { $sum: 1 } } },
+    ]);
+
+    // Format status breakdown
+    const statusBreakdown = {
+      pending: 0,
+      confirmed: 0,
+      shipping: 0,
+      completed: 0,
+      canceled: 0,
+    };
+    ordersByStatus.forEach((item) => {
+      statusBreakdown[item._id] = item.count;
+    });
 
     // Total revenue (completed orders only)
     const revenueData = await Order.aggregate([
@@ -843,19 +857,79 @@ export const getOrderStats = async (req, res, next) => {
           )
         : 0;
 
+    // Revenue trend by day (last 30 days)
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    thirtyDaysAgo.setHours(0, 0, 0, 0);
+
+    const revenueTrend = await Order.aggregate([
+      {
+        $match: {
+          status: "completed",
+          createdAt: { $gte: thirtyDaysAgo },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+            day: { $dayOfMonth: "$createdAt" },
+          },
+          revenue: { $sum: "$total_price" },
+          orderCount: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id.year": 1, "_id.month": 1, "_id.day": 1 } },
+    ]);
+
+    // Revenue by payment method
+    const revenueByPaymentMethod = await Order.aggregate([
+      { $match: { status: "completed" } },
+      {
+        $group: {
+          _id: "$payment_method",
+          revenue: { $sum: "$total_price" },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    // Payment status breakdown
+    const paymentStatusBreakdown = await Order.aggregate([
+      { $group: { _id: "$payment_status", count: { $sum: 1 } } },
+    ]);
+
+    // Average Order Value
+    const completedOrderCount = statusBreakdown.completed;
+    const averageOrderValue =
+      completedOrderCount > 0 ? totalRevenue / completedOrderCount : 0;
+
+    // Conversion rate (completed / total)
+    const conversionRate =
+      totalOrders > 0
+        ? Math.round((completedOrderCount / totalOrders) * 100 * 10) / 10
+        : 0;
+
     // Recent orders
     const recentOrders = await Order.find()
       .sort("-createdAt")
       .limit(5)
-      .select("_id customer_name total_price status createdAt");
+      .populate("user_id", "full_name email")
+      .select("_id customer_name total_price status payment_status createdAt");
 
     res.status(200).json({
       success: true,
       data: {
         totalOrders,
-        pendingOrders,
+        statusBreakdown,
         totalRevenue,
         revenueGrowth,
+        revenueTrend,
+        revenueByPaymentMethod,
+        paymentStatusBreakdown,
+        averageOrderValue: Math.round(averageOrderValue),
+        conversionRate,
         recentOrders,
       },
     });

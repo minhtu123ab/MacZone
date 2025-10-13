@@ -5,6 +5,7 @@ export const APP_DESCRIPTION = "Premium Apple Products Store";
 // Routes
 export const ROUTES = {
   HOME: "/",
+  ADMIN: "/admin",
   LOGIN: "/login",
   REGISTER: "/register",
   PROFILE: "/profile",

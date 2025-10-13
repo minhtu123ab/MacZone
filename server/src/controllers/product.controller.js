@@ -429,3 +429,145 @@ export const getProductStats = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Get top selling products (Admin dashboard)
+// @route   GET /api/products/admin/top-selling
+// @access  Private/Admin
+export const getTopSellingProducts = async (req, res, next) => {
+  try {
+    const limit = parseInt(req.query.limit) || 10;
+
+    // Import OrderItem model
+    const { OrderItem } = await import("../models/index.js");
+
+    // Get top selling products by quantity sold
+    const topProducts = await OrderItem.aggregate([
+      {
+        $lookup: {
+          from: "orders",
+          localField: "order_id",
+          foreignField: "_id",
+          as: "order",
+        },
+      },
+      { $unwind: "$order" },
+      // Only count completed orders
+      { $match: { "order.status": "completed" } },
+      {
+        $group: {
+          _id: "$product_id",
+          totalQuantitySold: { $sum: "$quantity" },
+          totalRevenue: { $sum: { $multiply: ["$price", "$quantity"] } },
+          orderCount: { $sum: 1 },
+        },
+      },
+      { $sort: { totalQuantitySold: -1 } },
+      { $limit: limit },
+      {
+        $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "product",
+        },
+      },
+      { $unwind: "$product" },
+      {
+        $project: {
+          _id: 1,
+          name: "$product.name",
+          thumbnail_url: "$product.thumbnail_url",
+          category_id: "$product.category_id",
+          totalQuantitySold: 1,
+          totalRevenue: 1,
+          orderCount: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      count: topProducts.length,
+      data: topProducts,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get low stock products (Admin dashboard alert)
+// @route   GET /api/products/admin/low-stock
+// @access  Private/Admin
+export const getLowStockProducts = async (req, res, next) => {
+  try {
+    const threshold = parseInt(req.query.threshold) || 10;
+
+    // Get variants with low stock
+    const lowStockVariants = await ProductVariant.find({
+      stock: { $lte: threshold, $gt: 0 },
+      is_active: true,
+    })
+      .populate({
+        path: "product_id",
+        select: "name thumbnail_url category_id",
+      })
+      .sort("stock")
+      .limit(20);
+
+    // Get out of stock variants
+    const outOfStockVariants = await ProductVariant.find({
+      stock: 0,
+      is_active: true,
+    })
+      .populate({
+        path: "product_id",
+        select: "name thumbnail_url category_id",
+      })
+      .limit(20);
+
+    // Format response
+    const lowStockItems = lowStockVariants.map((variant) => ({
+      _id: variant._id,
+      product: {
+        _id: variant.product_id._id,
+        name: variant.product_id.name,
+        thumbnail_url: variant.product_id.thumbnail_url,
+      },
+      variant: {
+        color: variant.color,
+        storage: variant.storage,
+        price: variant.price,
+      },
+      stock: variant.stock,
+      status: "low_stock",
+    }));
+
+    const outOfStockItems = outOfStockVariants.map((variant) => ({
+      _id: variant._id,
+      product: {
+        _id: variant.product_id._id,
+        name: variant.product_id.name,
+        thumbnail_url: variant.product_id.thumbnail_url,
+      },
+      variant: {
+        color: variant.color,
+        storage: variant.storage,
+        price: variant.price,
+      },
+      stock: variant.stock,
+      status: "out_of_stock",
+    }));
+
+    res.status(200).json({
+      success: true,
+      data: {
+        lowStock: lowStockItems,
+        outOfStock: outOfStockItems,
+        lowStockCount: lowStockItems.length,
+        outOfStockCount: outOfStockItems.length,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

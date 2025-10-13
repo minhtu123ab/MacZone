@@ -23,7 +23,11 @@ export default function LoginPage() {
       if (result.success) {
         message.success("Login successful! Welcome back!");
         await new Promise((resolve) => setTimeout(resolve, 300));
-        navigate(ROUTES.HOME, { replace: true });
+        if (result.user.role === "admin") {
+          navigate(ROUTES.ADMIN, { replace: true });
+        } else {
+          navigate(ROUTES.HOME, { replace: true });
+        }
       } else {
         message.error(result.error || "Login failed!");
       }

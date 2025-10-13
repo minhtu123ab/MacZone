@@ -336,3 +336,151 @@ code {
   justify-content: center;
   margin: 0 !important;
 }
+
+/* Role Select Styles */
+.role-select-admin .ant-select-selector {
+  background: rgba(220, 38, 38, 0.1) !important;
+  border: 1px solid rgba(220, 38, 38, 0.3) !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+}
+
+.role-select-admin .ant-select-selector:hover {
+  background: rgba(220, 38, 38, 0.15) !important;
+  border-color: rgba(220, 38, 38, 0.5) !important;
+}
+
+.role-select-admin .ant-select-selection-item {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+  line-height: 32px !important;
+}
+
+.role-select-admin .ant-select-arrow {
+  color: #dc2626 !important;
+}
+
+.role-select-user .ant-select-selector {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+}
+
+.role-select-user .ant-select-selector:hover {
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+.role-select-user .ant-select-selection-item {
+  color: #3b82f6 !important;
+  font-weight: 600 !important;
+  line-height: 32px !important;
+}
+
+.role-select-user .ant-select-arrow {
+  color: #3b82f6 !important;
+}
+
+/* Role Select Dropdown */
+.role-select-dropdown {
+  background: rgba(20, 20, 20, 0.95) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+.role-select-dropdown .ant-select-item {
+  padding: 8px 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+.role-select-dropdown .ant-select-item:hover {
+  background: rgba(59, 130, 246, 0.15) !important;
+}
+
+.role-select-dropdown .ant-select-item-option-selected {
+  background: rgba(59, 130, 246, 0.2) !important;
+}
+
+/* MacZone Admin Sidebar Menu - Specific styles that won't affect other menus */
+.maczone-admin-sidebar-menu.ant-menu-dark .ant-menu-item {
+  border-radius: 10px !important;
+  margin: 4px 0 !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  padding: 0 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+}
+
+.maczone-admin-sidebar-menu.ant-menu-dark .ant-menu-item:hover {
+  background: rgba(24, 144, 255, 0.12) !important;
+  transform: translateX(4px);
+}
+
+.maczone-admin-sidebar-menu.ant-menu-dark .ant-menu-item-selected {
+  background: linear-gradient(
+    90deg,
+    rgba(24, 144, 255, 0.2) 0%,
+    rgba(24, 144, 255, 0.08) 100%
+  ) !important;
+  border-left: 3px solid #1890ff;
+  padding-left: 13px !important;
+}
+
+.maczone-admin-sidebar-menu.ant-menu-dark .ant-menu-item-selected::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  background: #1890ff;
+  border-radius: 2px 0 0 2px;
+  box-shadow: 0 0 10px rgba(24, 144, 255, 0.5);
+}
+
+.maczone-admin-sidebar-menu.ant-menu-dark .ant-menu-item .anticon {
+  font-size: 18px !important;
+  transition: all 0.3s ease !important;
+}
+
+.maczone-admin-sidebar-menu.ant-menu-dark .ant-menu-item-selected .anticon {
+  color: #1890ff !important;
+  transform: scale(1.1);
+}
+
+.maczone-admin-sidebar-menu.ant-menu-dark .ant-menu-item span {
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.maczone-admin-sidebar-menu.ant-menu-dark .ant-menu-item-selected span {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* MacZone Admin Logo Hover Effect */
+.maczone-admin-logo-container {
+  transition: all 0.3s ease;
+}
+
+.maczone-admin-logo-container:hover {
+  background: rgba(24, 144, 255, 0.05);
+}
+
+.maczone-admin-logo {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.maczone-admin-logo-container:hover .maczone-admin-logo {
+  transform: scale(1.08);
+  filter: drop-shadow(0 4px 16px rgba(24, 144, 255, 0.6)) !important;
+}

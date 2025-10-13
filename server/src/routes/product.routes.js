@@ -8,6 +8,8 @@ import {
   getProductsByCategory,
   getProductStats,
   getAllProductsAdmin,
+  getTopSellingProducts,
+  getLowStockProducts,
 } from "../controllers/product.controller.js";
 import { protect, authorize } from "../middleware/auth.middleware.js";
 import {
@@ -36,6 +38,66 @@ const router = express.Router();
  *         $ref: '#/components/responses/ForbiddenError'
  */
 router.get("/admin/stats", protect, authorize("admin"), getProductStats);
+
+/**
+ * @swagger
+ * /api/products/admin/top-selling:
+ *   get:
+ *     summary: Get top selling products (Admin only)
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Number of top products to return
+ *     responses:
+ *       200:
+ *         description: Top selling products retrieved successfully
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         $ref: '#/components/responses/ForbiddenError'
+ */
+router.get(
+  "/admin/top-selling",
+  protect,
+  authorize("admin"),
+  getTopSellingProducts
+);
+
+/**
+ * @swagger
+ * /api/products/admin/low-stock:
+ *   get:
+ *     summary: Get low stock products alert (Admin only)
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: threshold
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Stock threshold for low stock alert
+ *     responses:
+ *       200:
+ *         description: Low stock products retrieved successfully
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         $ref: '#/components/responses/ForbiddenError'
+ */
+router.get(
+  "/admin/low-stock",
+  protect,
+  authorize("admin"),
+  getLowStockProducts
+);
 
 /**
  * @swagger

@@ -159,6 +159,7 @@ const OrderManagement = () => {
     {
       title: "Email",
       key: "email",
+      width: 250,
       render: (_, record) => record.user?.email || "-",
     },
     {
@@ -249,7 +250,6 @@ const OrderManagement = () => {
               <Option value="">All Payment</Option>
               <Option value="unpaid">Unpaid</Option>
               <Option value="paid">Paid</Option>
-              <Option value="refunded">Refunded</Option>
             </Select>
             <Button icon={<ReloadOutlined />} onClick={fetchOrders}>
               Refresh
@@ -274,6 +274,8 @@ const OrderManagement = () => {
         onCancel={() => setDetailModalVisible(false)}
         width={900}
         footer={null}
+        centered
+        bodyStyle={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}
       >
         {selectedOrder && (
           <div>

@@ -607,3 +607,109 @@ export const getAllReviews = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Get review statistics (Admin dashboard)
+// @route   GET /api/reviews/admin/stats
+// @access  Private/Admin
+export const getReviewStats = async (req, res, next) => {
+  try {
+    // Total reviews
+    const totalReviews = await Review.countDocuments();
+
+    // New reviews this month
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    const newReviewsThisMonth = await Review.countDocuments({
+      createdAt: { $gte: startOfMonth },
+    });
+
+    // Average rating across all reviews
+    const avgRatingResult = await Review.aggregate([
+      { $group: { _id: null, avgRating: { $avg: "$rating" } } },
+    ]);
+    const averageRating = avgRatingResult[0]?.avgRating || 0;
+
+    // Rating distribution (1-5 stars)
+    const ratingDistribution = await Review.aggregate([
+      { $group: { _id: "$rating", count: { $sum: 1 } } },
+      { $sort: { _id: 1 } },
+    ]);
+
+    // Format rating distribution
+    const ratingBreakdown = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    };
+    ratingDistribution.forEach((item) => {
+      ratingBreakdown[item._id] = item.count;
+    });
+
+    // Reviews growth by month (last 6 months)
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+    const reviewGrowth = await Review.aggregate([
+      { $match: { createdAt: { $gte: sixMonthsAgo } } },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id.year": 1, "_id.month": 1 } },
+    ]);
+
+    // Top reviewed products
+    const topReviewedProducts = await Review.aggregate([
+      {
+        $group: {
+          _id: "$product_id",
+          reviewCount: { $sum: 1 },
+          avgRating: { $avg: "$rating" },
+        },
+      },
+      { $sort: { reviewCount: -1 } },
+      { $limit: 5 },
+      {
+        $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "product",
+        },
+      },
+      { $unwind: "$product" },
+      {
+        $project: {
+          _id: 1,
+          name: "$product.name",
+          thumbnail_url: "$product.thumbnail_url",
+          reviewCount: 1,
+          avgRating: { $round: ["$avgRating", 1] },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        totalReviews,
+        newReviewsThisMonth,
+        averageRating: Math.round(averageRating * 10) / 10,
+        ratingBreakdown,
+        reviewGrowth,
+        topReviewedProducts,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

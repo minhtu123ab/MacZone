@@ -159,6 +159,11 @@ export const adminAPI = {
   getOrderStats: () => api.get("/orders/admin/stats"),
   getUserStats: () => api.get("/users/stats"),
   getProductStats: () => api.get("/products/admin/stats"),
+  getReviewStats: () => api.get("/reviews/admin/stats"),
+  getTopSellingProducts: (params) =>
+    api.get("/products/admin/top-selling", { params }),
+  getLowStockProducts: (params) =>
+    api.get("/products/admin/low-stock", { params }),
 
   // User Management
   getAllUsers: (params) => api.get("/users", { params }),

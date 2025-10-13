@@ -352,6 +352,8 @@ const ProductManagement = () => {
         }}
         footer={null}
         width={700}
+        centered
+        bodyStyle={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item

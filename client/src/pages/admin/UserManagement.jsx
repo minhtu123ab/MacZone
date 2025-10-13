@@ -181,15 +181,18 @@ const UserManagement = () => {
       render: (role, record) => (
         <Select
           value={role}
-          style={{ width: 100 }}
+          style={{ width: 120 }}
           onChange={(value) => handleChangeRole(record._id, value)}
-          size="small"
+          className={
+            role === "admin" ? "role-select-admin" : "role-select-user"
+          }
+          popupClassName="role-select-dropdown"
         >
           <Option value="user">
-            <Tag color="blue">User</Tag>
+            <span style={{ color: "#3b82f6", fontWeight: 600 }}>User</span>
           </Option>
           <Option value="admin">
-            <Tag color="red">Admin</Tag>
+            <span style={{ color: "#dc2626", fontWeight: 600 }}>Admin</span>
           </Option>
         </Select>
       ),
@@ -288,6 +291,8 @@ const UserManagement = () => {
         }}
         footer={null}
         width={600}
+        centered
+        bodyStyle={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item
