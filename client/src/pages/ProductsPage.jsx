@@ -340,7 +340,7 @@ export default function ProductsPage() {
                                   key={i}
                                   className={`text-base transition-all duration-300 ${
                                     i < Math.round(product.average_rating)
-                                      ? "text-yellow-400 group-hover:scale-110"
+                                      ? "text-apple-blue group-hover:scale-110"
                                       : "text-gray-700"
                                   }`}
                                 >

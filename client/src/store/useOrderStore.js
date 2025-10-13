@@ -133,10 +133,16 @@ const useOrderStore = create((set, get) => ({
       if (response.data.success) {
         message.success("Order status updated successfully!");
 
-        // Update orders list
+        // Update orders list with both status and payment_status
         const orders = get().orders;
         const updatedOrders = orders.map((order) =>
-          order._id === orderId ? { ...order, status } : order
+          order._id === orderId
+            ? {
+                ...order,
+                status: response.data.data.status,
+                payment_status: response.data.data.payment_status,
+              }
+            : order
         );
         set({ orders: updatedOrders, loading: false });
 

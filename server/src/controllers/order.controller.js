@@ -523,6 +523,12 @@ export const updateOrderStatus = async (req, res, next) => {
     // Update status
     const oldStatus = order.status;
     order.status = status;
+
+    // Auto-update payment status to "paid" when order is completed
+    if (status === "completed" && order.payment_status !== "paid") {
+      order.payment_status = "paid";
+    }
+
     await order.save();
 
     // Send order completed email if status changed to "completed"
@@ -558,6 +564,7 @@ export const updateOrderStatus = async (req, res, next) => {
       data: {
         _id: order._id,
         status: order.status,
+        payment_status: order.payment_status,
         updatedAt: order.updatedAt,
       },
     });

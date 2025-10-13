@@ -28,8 +28,10 @@ import {
 import PageLayout from "../components/layout/PageLayout";
 import OrderStatusBadge from "../components/common/OrderStatusBadge";
 import PaymentStatusBadge from "../components/common/PaymentStatusBadge";
+import ReviewItemCard from "../components/features/review/ReviewItemCard";
 import useOrderStore from "../store/useOrderStore";
 import useAuthStore from "../store/useAuthStore";
+import { reviewAPI } from "../services/api";
 import { ROUTES } from "../constants";
 
 const { Title, Text } = Typography;
@@ -45,6 +47,8 @@ export default function OrderDetailPage() {
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [canceling, setCanceling] = useState(false);
+  const [itemReviews, setItemReviews] = useState({});
+  const [loadingReviews, setLoadingReviews] = useState(false);
 
   const fromCheckout = location.state?.fromCheckout;
 
@@ -57,6 +61,33 @@ export default function OrderDetailPage() {
       fetchOrderById(orderId);
     }
   }, [isAuthenticated, orderId, navigate, fetchOrderById]);
+
+  // Fetch reviews function
+  const fetchReviews = async () => {
+    if (currentOrder && currentOrder.order.status === "completed") {
+      setLoadingReviews(true);
+      try {
+        const response = await reviewAPI.getMyReviews();
+        const reviews = response.data.data;
+
+        // Map reviews by order_item_id
+        const reviewsMap = {};
+        reviews.forEach((review) => {
+          reviewsMap[review.order_item_id] = review;
+        });
+        setItemReviews(reviewsMap);
+      } catch (error) {
+        console.error("Failed to fetch reviews:", error);
+      } finally {
+        setLoadingReviews(false);
+      }
+    }
+  };
+
+  // Fetch reviews for completed orders
+  useEffect(() => {
+    fetchReviews();
+  }, [currentOrder]);
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -304,6 +335,21 @@ export default function OrderDetailPage() {
                           </Title>
                         </div>
                       </div>
+
+                      {/* Review Section for Completed Orders */}
+                      {order.status === "completed" && (
+                        <div className="mt-4 pl-28">
+                          <ReviewItemCard
+                            item={item}
+                            review={itemReviews[item._id]}
+                            onReviewChange={() => {
+                              // Refresh reviews after edit/delete
+                              fetchReviews();
+                            }}
+                          />
+                        </div>
+                      )}
+
                       <Divider className="!bg-dark-border !my-4" />
                     </div>
                   ))}

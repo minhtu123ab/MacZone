@@ -138,4 +138,19 @@ export const orderAPI = {
   getAllOrders: (params) => api.get("/orders/admin/all", { params }),
 };
 
+// Review APIs
+export const reviewAPI = {
+  createReview: (orderItemId, data) =>
+    api.post(`/reviews/order-item/${orderItemId}`, data),
+  getProductReviews: (productId, params) =>
+    api.get(`/reviews/product/${productId}`, { params }),
+  getFeaturedReviews: (params) => api.get("/reviews/featured", { params }),
+  getMyReviews: (params) => api.get("/reviews/my-reviews", { params }),
+  getReviewableItems: () => api.get("/reviews/reviewable-items"),
+  markReviewPrompted: (orderItemIds) =>
+    api.post("/reviews/mark-prompted", { orderItemIds }),
+  updateReview: (reviewId, data) => api.put(`/reviews/${reviewId}`, data),
+  deleteReview: (reviewId) => api.delete(`/reviews/${reviewId}`),
+};
+
 export default api;

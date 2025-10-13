@@ -25,7 +25,7 @@ import TrustBadge from "../components/common/TrustBadge";
 import NewsletterSection from "../components/features/home/NewsletterSection";
 import CTASection from "../components/features/home/CTASection";
 import { APP_NAME } from "../constants";
-import { categoryAPI } from "../services/api";
+import { categoryAPI, reviewAPI } from "../services/api";
 
 const { Title, Paragraph } = Typography;
 
@@ -34,6 +34,8 @@ export default function HomePage() {
   const { user, isAuthenticated } = useAuth();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
 
   // Scroll animation hooks for different sections
   const trustBadgesAnimation = useScrollAnimation({ threshold: 0.2 });
@@ -45,11 +47,13 @@ export default function HomePage() {
 
   // Staggered animations for grid items
   const featureAnimations = useStaggerAnimation(3, { staggerDelay: 150 });
-  const trustBadgeAnimations = useStaggerAnimation(4, { staggerDelay: 100 });
+  const trustBadgeAnimations = useStaggerAnimation(4, { staggerDelay: 150 });
   const categoryAnimations = useStaggerAnimation(categories.length, {
-    staggerDelay: 120,
+    staggerDelay: 150,
   });
-  const testimonialAnimations = useStaggerAnimation(3, { staggerDelay: 200 });
+  const testimonialAnimations = useStaggerAnimation(reviews.length, {
+    staggerDelay: 200,
+  });
 
   // Fetch categories from API
   useEffect(() => {
@@ -69,6 +73,24 @@ export default function HomePage() {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        setLoadingReviews(true);
+        const response = await reviewAPI.getFeaturedReviews();
+        setReviews(response.data.data);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        message.error("Failed to load reviews");
+      } finally {
+        setLoadingReviews(false);
+      }
+      setLoadingReviews(false);
+    };
+
+    fetchReviews();
+  }, []);
+
   const features = [
     {
       icon: <AppleOutlined className="text-4xl" />,
@@ -84,30 +106,6 @@ export default function HomePage() {
       icon: <SafetyOutlined className="text-4xl" />,
       title: "Secure Payment",
       description: "Protected transactions & buyer guarantee",
-    },
-  ];
-
-  const testimonials = [
-    {
-      name: "Nguyễn Văn A",
-      role: "Business Owner",
-      rating: 5,
-      comment:
-        "Sản phẩm chính hãng, giá tốt. Đội ngũ tư vấn nhiệt tình. MacBook Pro của tôi hoạt động tuyệt vời!",
-    },
-    {
-      name: "Trần Thị B",
-      role: "Designer",
-      rating: 5,
-      comment:
-        "Mua iPhone 15 Pro Max tại đây rất hài lòng. Giao hàng nhanh, bao bì cẩn thận. Sẽ ủng hộ lâu dài!",
-    },
-    {
-      name: "Lê Minh C",
-      role: "Developer",
-      rating: 5,
-      comment:
-        "Dịch vụ sau bán hàng tốt, hỗ trợ nhiệt tình. iPad Pro giúp công việc của tôi hiệu quả hơn nhiều!",
     },
   ];
 
@@ -377,29 +375,42 @@ export default function HomePage() {
             </Paragraph>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                ref={testimonialAnimations[index].ref}
-                className={`scroll-animate ${
-                  testimonialAnimations[index].isVisible
-                    ? "animate-fade-up"
-                    : ""
-                }`}
-                style={{
-                  animationDelay: `${testimonialAnimations[index].delay}ms`,
-                }}
-              >
-                <TestimonialCard
-                  name={testimonial.name}
-                  role={testimonial.role}
-                  rating={testimonial.rating}
-                  comment={testimonial.comment}
-                />
-              </div>
-            ))}
-          </div>
+          {loadingReviews ? (
+            <div className="flex justify-center items-center py-20">
+              <Spin size="large" tip="Loading reviews..." />
+            </div>
+          ) : reviews.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {reviews.map((testimonial, index) => (
+                <div
+                  key={index}
+                  ref={testimonialAnimations[index].ref}
+                  className={`scroll-animate ${
+                    testimonialAnimations[index].isVisible
+                      ? "animate-fade-up"
+                      : ""
+                  }`}
+                  style={{
+                    animationDelay: `${testimonialAnimations[index].delay}ms`,
+                  }}
+                >
+                  <TestimonialCard
+                    name={testimonial.user.full_name}
+                    role={testimonial.user.role}
+                    rating={testimonial.rating}
+                    comment={testimonial.comment}
+                    productName={testimonial.product.name}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <Paragraph className="!text-lg !text-apple-gray">
+                No reviews available at the moment
+              </Paragraph>
+            </div>
+          )}
         </div>
       </div>
 

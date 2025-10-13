@@ -18,6 +18,7 @@ import {
   StarFilled,
 } from "@ant-design/icons";
 import PageLayout from "../components/layout/PageLayout";
+import { ProductReviews } from "../components";
 import { productAPI } from "../services/api";
 import { ROUTES } from "../constants";
 import useAuthStore from "../store/useAuthStore";
@@ -256,7 +257,7 @@ export default function ProductDetailPage() {
                           key={i}
                           className={
                             i < Math.round(product.average_rating)
-                              ? "text-yellow-500"
+                              ? "text-apple-blue"
                               : "text-gray-600"
                           }
                         />
@@ -451,6 +452,9 @@ export default function ProductDetailPage() {
               </div>
             </Col>
           </Row>
+
+          {/* Product Reviews Section */}
+          <ProductReviews productId={product._id} />
         </div>
       </div>
     </PageLayout>

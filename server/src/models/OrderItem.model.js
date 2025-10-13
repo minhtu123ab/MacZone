@@ -40,6 +40,11 @@ const orderItemSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    // Đánh dấu đã nhắc nhở review (đã mở popup review)
+    is_review_prompted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

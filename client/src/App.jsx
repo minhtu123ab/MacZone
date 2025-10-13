@@ -13,8 +13,11 @@ import OrdersPage from "./pages/OrdersPage";
 import OrderDetailPage from "./pages/OrderDetailPage";
 import FloatingCartButton from "./components/common/FloatingCartButton";
 import FloatingChatButton from "./components/common/FloatingChatButton";
+import FloatingReviewButton from "./components/common/FloatingReviewButton";
 import CartDrawer from "./components/features/cart/CartDrawer";
 import ChatbotDrawer from "./components/features/chatbot/ChatbotDrawer";
+import ReviewDrawer from "./components/features/review/ReviewDrawer";
+import OrderReviewModal from "./components/features/review/OrderReviewModal";
 import "./App.css";
 
 const { Content } = Layout;
@@ -40,10 +43,13 @@ function App() {
         {/* Floating Buttons - Always visible on all pages */}
         <FloatingCartButton />
         <FloatingChatButton />
+        <FloatingReviewButton />
 
-        {/* Drawers */}
+        {/* Drawers & Modals */}
         <CartDrawer />
         <ChatbotDrawer />
+        <ReviewDrawer />
+        <OrderReviewModal />
       </Content>
     </Layout>
   );

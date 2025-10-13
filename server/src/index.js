@@ -73,6 +73,7 @@ import imageRoutes from "./routes/image.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import chatbotRoutes from "./routes/chatbot.routes.js";
 import orderRoutes from "./routes/order.routes.js";
+import reviewRoutes from "./routes/review.routes.js";
 
 // Use routes
 app.use("/api/auth", authRoutes);
@@ -86,6 +87,7 @@ app.use("/api/images", imageRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/chatbot", chatbotRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

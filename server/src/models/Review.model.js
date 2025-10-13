@@ -12,6 +12,11 @@ const reviewSchema = new mongoose.Schema(
       ref: "Product",
       required: [true, "Please provide a product"],
     },
+    order_item_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "OrderItem",
+      required: [true, "Please provide an order item"],
+    },
     rating: {
       type: Number,
       required: [true, "Please provide a rating"],
@@ -32,7 +37,7 @@ const reviewSchema = new mongoose.Schema(
 reviewSchema.index({ product_id: 1 });
 reviewSchema.index({ user_id: 1 });
 
-// Compound index to ensure one review per user per product
-reviewSchema.index({ user_id: 1, product_id: 1 }, { unique: true });
+// Unique index to ensure one review per order item (also serves as regular index)
+reviewSchema.index({ order_item_id: 1 }, { unique: true });
 
 export default mongoose.model("Review", reviewSchema);

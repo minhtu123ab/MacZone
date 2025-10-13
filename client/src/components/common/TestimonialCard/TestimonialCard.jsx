@@ -9,7 +9,7 @@ export default function TestimonialCard({
   role,
   rating,
   comment,
-  avatar,
+  productName,
 }) {
   return (
     <div className="glass rounded-2xl p-6 hover:shadow-glow transition-all duration-300">
@@ -17,19 +17,24 @@ export default function TestimonialCard({
       <Paragraph className="!text-apple-gray-light !text-base !mb-6 italic">
         &quot;{comment}&quot;
       </Paragraph>
+      {productName && (
+        <div className="mb-3 px-3 py-1.5 rounded-lg bg-apple-blue/10 border border-apple-blue/20 inline-block">
+          <Text className="!text-apple-blue !text-xs !font-medium">
+            📱 {productName}
+          </Text>
+        </div>
+      )}
       <div className="flex items-center gap-3">
-        {avatar ? (
-          <Avatar src={avatar} size={48} />
-        ) : (
-          <Avatar
-            icon={<UserOutlined />}
-            size={48}
-            className="!bg-apple-blue/20"
-          />
-        )}
+        <Avatar
+          icon={<UserOutlined />}
+          size={48}
+          className="!bg-apple-blue/20"
+        />
         <div>
           <Text className="!text-white !font-semibold !block">{name}</Text>
-          <Text className="!text-apple-gray !text-sm">{role}</Text>
+          <Text className="!text-apple-gray !text-sm">
+            {role === "user" ? "Customer" : "Administrator"}
+          </Text>
         </div>
       </div>
     </div>
@@ -38,8 +43,8 @@ export default function TestimonialCard({
 
 TestimonialCard.propTypes = {
   name: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired,
+  role: PropTypes.string,
   rating: PropTypes.number.isRequired,
   comment: PropTypes.string.isRequired,
-  avatar: PropTypes.string,
+  productName: PropTypes.string,
 };
