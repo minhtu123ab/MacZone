@@ -158,6 +158,7 @@ const AdminLayout = () => {
               <img
                 src="/logo.svg"
                 alt="MacZone Icon"
+                className="maczone-admin-logo"
                 style={{
                   height: 40,
                   filter: "drop-shadow(0 2px 8px rgba(24, 144, 255, 0.4))",

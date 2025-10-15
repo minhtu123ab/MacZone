@@ -36,6 +36,7 @@ import {
   CloseCircleOutlined,
   InboxOutlined,
   AppstoreOutlined,
+  MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import {
@@ -152,11 +153,21 @@ const ProductManagement = () => {
 
   const handleEdit = (product) => {
     setEditingProduct(product);
+
+    // Convert specifications Map to array for dynamic form fields
+    const specificationsArray = product.specifications
+      ? Object.entries(product.specifications).map(([key, value]) => ({
+          key,
+          value,
+        }))
+      : [];
+
     form.setFieldsValue({
       name: product.name,
       description: product.description,
       category_id: product.category_id?._id,
       is_active: product.is_active,
+      specifications: specificationsArray,
     });
     setModalVisible(true);
   };
@@ -218,10 +229,25 @@ const ProductManagement = () => {
 
   const handleSubmit = async (values) => {
     try {
+      // Convert specifications array to object
+      const specificationsObj = {};
+      if (values.specifications && Array.isArray(values.specifications)) {
+        values.specifications.forEach((spec) => {
+          if (spec && spec.key && spec.value) {
+            specificationsObj[spec.key] = spec.value;
+          }
+        });
+      }
+
+      const submitData = {
+        ...values,
+        specifications: specificationsObj,
+      };
+
       if (editingProduct) {
         const response = await adminAPI.updateProduct(
           editingProduct._id,
-          values
+          submitData
         );
         if (response.data.success) {
           message.success("Product updated successfully");
@@ -230,7 +256,7 @@ const ProductManagement = () => {
           form.resetFields();
         }
       } else {
-        const response = await adminAPI.createProduct(values);
+        const response = await adminAPI.createProduct(submitData);
         if (response.data.success) {
           message.success("Product created successfully");
           setModalVisible(false);
@@ -704,6 +730,56 @@ const ProductManagement = () => {
           <Form.Item label="Description" name="description">
             <TextArea rows={4} placeholder="Product description..." />
           </Form.Item>
+
+          <Divider orientation="left">Technical Specifications</Divider>
+          <Form.List name="specifications">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Row key={key} gutter={16} align="middle">
+                    <Col span={10}>
+                      <Form.Item
+                        {...restField}
+                        name={[name, "key"]}
+                        rules={[{ required: true, message: "Key required" }]}
+                      >
+                        <Input placeholder="e.g. Chip, RAM, Screen..." />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        {...restField}
+                        name={[name, "value"]}
+                        rules={[{ required: true, message: "Value required" }]}
+                      >
+                        <Input placeholder="e.g. A17 Pro, 8GB, 6.7 inch..." />
+                      </Form.Item>
+                    </Col>
+                    <Col span={2}>
+                      <Button
+                        type="text"
+                        danger
+                        icon={<MinusCircleOutlined />}
+                        onClick={() => remove(name)}
+                      />
+                    </Col>
+                  </Row>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                  >
+                    Add Specification
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+
+          <Divider />
 
           <Form.Item
             label="Thumbnail Image"

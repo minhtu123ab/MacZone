@@ -280,9 +280,6 @@ export default function ProductDetailPage() {
                 {/* Price */}
                 {selectedVariant && (
                   <div>
-                    <Text className="!text-apple-gray !text-sm !block mb-2">
-                      Price
-                    </Text>
                     <Title level={3} className="!text-apple-blue !mb-0">
                       {formatPrice(selectedVariant.price)}
                     </Title>
@@ -393,6 +390,41 @@ export default function ProductDetailPage() {
                   </div>
                 )}
 
+                {/* Specifications */}
+                {product.specifications &&
+                  Object.keys(product.specifications).length > 0 && (
+                    <div className="glass rounded-3xl p-8 border border-white/10 bg-gradient-to-br from-blue-900/10 via-purple-900/5 to-transparent">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-1 h-8 bg-gradient-to-b from-apple-blue to-purple-500 rounded-full"></div>
+                        <Text className="!text-white !text-xl !font-bold">
+                          Technical Specifications
+                        </Text>
+                      </div>
+                      <div className="space-y-2">
+                        {Object.entries(product.specifications).map(
+                          ([key, value], index) => (
+                            <div
+                              key={key}
+                              className={`flex justify-between items-center py-3 px-4 rounded-xl transition-all duration-200 hover:bg-white/5 ${
+                                index !==
+                                Object.keys(product.specifications).length - 1
+                                  ? "border-b border-white/5"
+                                  : ""
+                              }`}
+                            >
+                              <Text className="!text-gray-300 !font-medium">
+                                {key}
+                              </Text>
+                              <Text className="!text-white !font-semibold text-right">
+                                {value}
+                              </Text>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )}
+
                 <Divider className="!bg-dark-border" />
 
                 {/* Quantity & Add to Cart */}
@@ -424,31 +456,6 @@ export default function ProductDetailPage() {
                     </Button>
                   </div>
                 </div>
-
-                {/* Specifications */}
-                {product.specifications &&
-                  Object.keys(product.specifications).length > 0 && (
-                    <div className="glass rounded-3xl p-6 border border-white/10">
-                      <Text className="!text-white !text-lg !font-bold !block mb-4">
-                        Technical Specifications
-                      </Text>
-                      <div className="space-y-3">
-                        {Object.entries(product.specifications).map(
-                          ([key, value]) => (
-                            <div
-                              key={key}
-                              className="flex justify-between py-2 border-b border-white/5 last:border-0"
-                            >
-                              <Text className="!text-gray-400">{key}</Text>
-                              <Text className="!text-white !font-medium">
-                                {value}
-                              </Text>
-                            </div>
-                          )
-                        )}
-                      </div>
-                    </div>
-                  )}
               </div>
             </Col>
           </Row>

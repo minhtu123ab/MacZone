@@ -6,6 +6,14 @@ import {
   ProductImage,
 } from "../models/index.js";
 
+// Helper function to convert Map specifications to plain object
+const convertSpecifications = (product) => {
+  if (product.specifications instanceof Map) {
+    product.specifications = Object.fromEntries(product.specifications);
+  }
+  return product;
+};
+
 // @desc    Get all products with filters, search, sort, pagination
 // @route   GET /api/products
 // @access  Public
@@ -48,7 +56,11 @@ export const getProducts = async (req, res, next) => {
       .populate("category_id", "name description")
       .sort(sort)
       .skip(skip)
-      .limit(parseInt(limit));
+      .limit(parseInt(limit))
+      .lean(); // Use lean() for plain JS objects
+
+    // Convert specifications Map to object for each product
+    products.forEach(convertSpecifications);
 
     // Get total count for pagination
     const total = await Product.countDocuments(filter);
@@ -106,7 +118,11 @@ export const getAllProductsAdmin = async (req, res, next) => {
       .populate("category_id", "name description")
       .sort(sort)
       .skip(skip)
-      .limit(parseInt(limit));
+      .limit(parseInt(limit))
+      .lean(); // Use lean() for plain JS objects
+
+    // Convert specifications Map to object for each product
+    products.forEach(convertSpecifications);
 
     // Get total count for pagination
     const total = await Product.countDocuments(filter);
@@ -152,10 +168,14 @@ export const getProduct = async (req, res, next) => {
       product_id: req.params.id,
     }).sort("display_order");
 
+    // Convert product to plain object and handle Map conversion
+    const productObj = product.toObject();
+    convertSpecifications(productObj);
+
     res.status(200).json({
       success: true,
       data: {
-        ...product.toObject(),
+        ...productObj,
         variants,
         images,
       },
@@ -362,7 +382,11 @@ export const getProductsByCategory = async (req, res, next) => {
     })
       .populate("category_id", "name description")
       .sort(sort)
-      .limit(parseInt(limit));
+      .limit(parseInt(limit))
+      .lean(); // Use lean() for plain JS objects
+
+    // Convert specifications Map to object for each product
+    products.forEach(convertSpecifications);
 
     res.status(200).json({
       success: true,
