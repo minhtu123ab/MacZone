@@ -135,28 +135,46 @@ export default function HomePage() {
           <Header />
 
           {/* Logo */}
-          <div className="flex justify-center mb-12">
+          <div className="flex justify-center mb-8">
             <img
               src="/logo.svg"
               alt={APP_NAME}
-              className="w-32 h-32 animate-pulse"
+              className="w-36 h-36 animate-pulse"
             />
           </div>
 
           {/* Main Content */}
           <div className="text-center mb-16">
-            <Title
-              level={1}
-              className="!text-6xl !font-bold !mb-6"
-              style={{
-                background: "linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              {APP_NAME}
-            </Title>
+            <div className="relative inline-block">
+              <Title
+                level={1}
+                className="!text-7xl !mb-8 relative"
+                style={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontWeight: 900,
+                  background:
+                    "linear-gradient(135deg, #0dd6f5 0%, #3b9dff 50%, #00b8d9 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase",
+                  filter:
+                    "drop-shadow(0 0 15px rgba(6, 182, 212, 0.3)) drop-shadow(0 4px 12px rgba(6, 182, 212, 0.2))",
+                }}
+              >
+                {APP_NAME}
+              </Title>
+              <div
+                className="absolute inset-0 -z-10"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at center, rgba(6, 182, 212, 0.12) 0%, transparent 60%)",
+                  filter: "blur(50px)",
+                  transform: "scale(1.1)",
+                }}
+              ></div>
+            </div>
 
             <Paragraph className="!text-2xl !text-apple-gray-light !mb-4">
               Premium Apple Products

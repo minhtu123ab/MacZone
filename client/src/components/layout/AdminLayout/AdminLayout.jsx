@@ -148,23 +148,31 @@ const AdminLayout = () => {
               alt="MacZone"
               className="maczone-admin-logo"
               style={{
-                width: 36,
-                height: 36,
+                width: 40,
+                height: 40,
                 filter: "drop-shadow(0 2px 8px rgba(24, 144, 255, 0.4))",
               }}
             />
           ) : (
-            <>
+            <div className="flex items-center gap-3">
               <img
-                src="/logo-text.svg"
+                src="/logo.svg"
+                alt="MacZone Icon"
+                style={{
+                  height: 40,
+                  filter: "drop-shadow(0 2px 8px rgba(24, 144, 255, 0.4))",
+                }}
+              />
+              <img
+                src="/logo-maczone-text.svg"
                 alt="MacZone Admin"
                 className="maczone-admin-logo"
                 style={{
-                  height: 50,
+                  height: 40,
                   filter: "drop-shadow(0 2px 8px rgba(24, 144, 255, 0.3))",
                 }}
               />
-            </>
+            </div>
           )}
         </div>
         <Menu

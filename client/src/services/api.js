@@ -102,6 +102,43 @@ export const variantAPI = {
   updateStock: (id, stock) => api.patch(`/variants/${id}/stock`, { stock }),
 };
 
+// Product Image APIs
+export const productImageAPI = {
+  getByProduct: (productId) => api.get(`/products/${productId}/images`),
+  getById: (id) => api.get(`/images/${id}`),
+  create: (productId, data) => api.post(`/products/${productId}/images`, data),
+  update: (id, data) => api.put(`/images/${id}`, data),
+  delete: (id) => api.delete(`/images/${id}`),
+};
+
+// Upload APIs
+export const uploadAPI = {
+  uploadImage: (file, folder = "products") => {
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("folder", folder);
+    return api.post("/upload/image", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+  uploadMultipleImages: (files, folder = "products") => {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("images", file);
+    });
+    formData.append("folder", folder);
+    return api.post("/upload/images", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+  deleteImage: (public_id) =>
+    api.delete("/upload/image", { data: { public_id } }),
+};
+
 // Cart APIs
 export const cartAPI = {
   getCart: () => api.get("/cart"),

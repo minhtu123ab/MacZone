@@ -229,7 +229,12 @@ const CategoryManagement = () => {
         footer={null}
         width={600}
         centered
-        bodyStyle={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}
+        styles={{
+          body: {
+            maxHeight: "calc(100vh - 200px)",
+            overflowY: "auto",
+          },
+        }}
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item

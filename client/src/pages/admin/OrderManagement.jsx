@@ -275,7 +275,12 @@ const OrderManagement = () => {
         width={900}
         footer={null}
         centered
-        bodyStyle={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}
+        styles={{
+          body: {
+            maxHeight: "calc(100vh - 200px)",
+            overflowY: "auto",
+          },
+        }}
       >
         {selectedOrder && (
           <div>

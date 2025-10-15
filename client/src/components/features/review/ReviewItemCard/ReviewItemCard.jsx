@@ -79,7 +79,7 @@ export default function ReviewItemCard({ item, review, onReviewChange }) {
     <>
       <Card
         className="border border-white/10 bg-white/5"
-        bodyStyle={{ padding: "16px" }}
+        styles={{ body: { padding: "16px" } }}
       >
         {/* Product Info */}
         <div className="flex gap-4 mb-4">

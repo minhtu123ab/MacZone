@@ -227,7 +227,7 @@ export default function ChatbotDrawer() {
                         key={idx}
                         size="small"
                         className="bg-white hover:shadow-md transition-shadow"
-                        bodyStyle={{ padding: "12px" }}
+                        styles={{ body: { padding: "12px" } }}
                       >
                         <div className="flex gap-3">
                           <div className="relative flex-shrink-0">
