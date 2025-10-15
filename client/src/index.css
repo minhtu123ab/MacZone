@@ -480,6 +480,101 @@ code {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Compare Floating Bar Animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Compare Bar Expand/Collapse Animations */
+@keyframes expandBar {
+  0% {
+    transform: translate(-50%, 10px) scale(0.4);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -5px) scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes collapseBar {
+  0% {
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -5px) scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, 10px) scale(0.4);
+    opacity: 0;
+  }
+}
+
+.animate-expand-bar {
+  animation: expandBar 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-collapse-bar {
+  animation: collapseBar 0.4s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Smooth transition for Compare Bar */
+.compare-bar-enter {
+  animation: expandBar 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.compare-bar-exit {
+  animation: collapseBar 0.4s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Custom Scrollbar for Compare Page */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
+
 .maczone-admin-logo-container:hover .maczone-admin-logo {
   transform: scale(1.08);
   filter: drop-shadow(0 4px 16px rgba(24, 144, 255, 0.6)) !important;

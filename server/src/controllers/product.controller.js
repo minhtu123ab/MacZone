@@ -595,3 +595,103 @@ export const getLowStockProducts = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Compare multiple products (get full details)
+// @route   POST /api/products/compare
+// @access  Public
+export const compareProducts = async (req, res, next) => {
+  try {
+    const { productIds } = req.body;
+
+    // Validate input
+    if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide an array of product IDs",
+      });
+    }
+
+    if (productIds.length > 2) {
+      return res.status(400).json({
+        success: false,
+        message: "You can only compare up to 2 products at a time",
+      });
+    }
+
+    // Fetch all products with full details
+    const productsPromises = productIds.map(async (productId) => {
+      const product = await Product.findById(productId)
+        .populate("category_id", "name description image")
+        .lean();
+
+      if (!product) {
+        return null;
+      }
+
+      // Convert specifications
+      convertSpecifications(product);
+
+      // Get variants
+      const variants = await ProductVariant.find({
+        product_id: productId,
+        is_active: true,
+      })
+        .sort("price")
+        .lean();
+
+      // Get images
+      const images = await ProductImage.find({
+        product_id: productId,
+      })
+        .sort("display_order")
+        .lean();
+
+      return {
+        ...product,
+        variants,
+        images,
+      };
+    });
+
+    const products = await Promise.all(productsPromises);
+
+    // Filter out null results (products not found)
+    const validProducts = products.filter((p) => p !== null);
+
+    if (validProducts.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found",
+      });
+    }
+
+    // Check if all products are from same category
+    if (validProducts.length > 1) {
+      const firstCategoryId = validProducts[0].category_id._id.toString();
+      const allSameCategory = validProducts.every(
+        (p) => p.category_id._id.toString() === firstCategoryId
+      );
+
+      if (!allSameCategory) {
+        return res.status(400).json({
+          success: false,
+          message: "Products must be from the same category for comparison",
+        });
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      count: validProducts.length,
+      data: validProducts,
+    });
+  } catch (error) {
+    if (error.kind === "ObjectId") {
+      return res.status(404).json({
+        success: false,
+        message: "Invalid product ID",
+      });
+    }
+    next(error);
+  }
+};

@@ -40,3 +40,7 @@ export { default as ReviewDrawer } from "./features/review/ReviewDrawer";
 export { default as OrderReviewModal } from "./features/review/OrderReviewModal";
 export { default as ReviewItemCard } from "./features/review/ReviewItemCard";
 export { default as ProductReviews } from "./features/review/ProductReviews";
+
+// Compare Components
+export { default as CompareButton } from "./features/CompareButton";
+export { default as CompareFloatingBar } from "./features/CompareFloatingBar";

@@ -7,6 +7,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import CompareProductsPage from "./pages/CompareProductsPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrdersPage from "./pages/OrdersPage";
@@ -14,6 +15,7 @@ import OrderDetailPage from "./pages/OrderDetailPage";
 import FloatingCartButton from "./components/common/FloatingCartButton";
 import FloatingChatButton from "./components/common/FloatingChatButton";
 import FloatingReviewButton from "./components/common/FloatingReviewButton";
+import { CompareFloatingBar } from "./components";
 import CartDrawer from "./components/features/cart/CartDrawer";
 import ChatbotDrawer from "./components/features/chatbot/ChatbotDrawer";
 import ReviewDrawer from "./components/features/review/ReviewDrawer";
@@ -45,6 +47,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/compare" element={<CompareProductsPage />} />
 
           {/* Protected Routes */}
           <Route
@@ -112,6 +115,7 @@ function App() {
             <FloatingCartButton />
             <FloatingChatButton />
             <FloatingReviewButton />
+            <CompareFloatingBar />
           </>
         )}
 

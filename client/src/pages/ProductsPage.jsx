@@ -20,6 +20,7 @@ import {
   HomeOutlined,
 } from "@ant-design/icons";
 import PageLayout from "../components/layout/PageLayout";
+import { CompareButton } from "../components";
 import { productAPI, categoryAPI } from "../services/api";
 import { ROUTES } from "../constants";
 import { useDebounce } from "../hooks/useDebounce";
@@ -316,6 +317,16 @@ export default function ProductsPage() {
                             </div>
                           </div>
                         )}
+
+                        {/* Compare checkbox */}
+                        <div className="absolute top-4 left-4 z-20">
+                          <div className="glass px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-md">
+                            <CompareButton
+                              product={product}
+                              variant="checkbox"
+                            />
+                          </div>
+                        </div>
                       </div>
 
                       {/* Content section */}

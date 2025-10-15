@@ -18,7 +18,7 @@ import {
   StarFilled,
 } from "@ant-design/icons";
 import PageLayout from "../components/layout/PageLayout";
-import { ProductReviews } from "../components";
+import { ProductReviews, CompareButton } from "../components";
 import { productAPI } from "../services/api";
 import { ROUTES } from "../constants";
 import useAuthStore from "../store/useAuthStore";
@@ -247,6 +247,11 @@ export default function ProductDetailPage() {
                 <Title level={2} className="!text-white !mb-2 !text-3xl">
                   {product.name}
                 </Title>
+
+                {/* Compare Button */}
+                <div className="mb-4">
+                  <CompareButton product={product} variant="button" />
+                </div>
 
                 {/* Rating */}
                 {product.average_rating > 0 && (

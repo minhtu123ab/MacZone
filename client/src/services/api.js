@@ -85,6 +85,7 @@ export const productAPI = {
   getById: (id) => api.get(`/products/${id}`),
   getByCategory: (categoryId, params) =>
     api.get(`/products/category/${categoryId}`, { params }),
+  compare: (productIds) => api.post("/products/compare", { productIds }),
   create: (data) => api.post("/products", data),
   update: (id, data) => api.put(`/products/${id}`, data),
   delete: (id) => api.delete(`/products/${id}`),

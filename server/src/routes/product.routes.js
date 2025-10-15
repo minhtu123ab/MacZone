@@ -10,6 +10,7 @@ import {
   getAllProductsAdmin,
   getTopSellingProducts,
   getLowStockProducts,
+  compareProducts,
 } from "../controllers/product.controller.js";
 import { protect, authorize } from "../middleware/auth.middleware.js";
 import {
@@ -189,6 +190,38 @@ router.get("/admin/all", protect, authorize("admin"), getAllProductsAdmin);
  *         description: Products retrieved successfully
  */
 router.get("/", getProducts);
+
+/**
+ * @swagger
+ * /api/products/compare:
+ *   post:
+ *     summary: Compare multiple products
+ *     description: Get full details of multiple products for comparison (max 2)
+ *     tags: [Products]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - productIds
+ *             properties:
+ *               productIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012"]
+ *                 description: Array of product IDs to compare (max 2)
+ *     responses:
+ *       200:
+ *         description: Products comparison data retrieved successfully
+ *       400:
+ *         description: Invalid request or products from different categories
+ *       404:
+ *         description: Products not found
+ */
+router.post("/compare", compareProducts);
 
 /**
  * @swagger
