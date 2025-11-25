@@ -13,8 +13,10 @@ import {
   MenuUnfoldOutlined,
   BellOutlined,
   CrownOutlined,
+  CustomerServiceOutlined,
 } from "@ant-design/icons";
 import useAuthStore from "../../../store/useAuthStore";
+import useChatSupportStore from "../../../store/useChatSupportStore";
 import { ROUTES } from "../../../constants";
 
 const { Header, Sider, Content } = Layout;
@@ -24,6 +26,7 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuthStore();
+  const { totalUnread } = useChatSupportStore();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -70,6 +73,15 @@ const AdminLayout = () => {
       key: "/admin/reviews",
       icon: <StarOutlined />,
       label: "Reviews",
+    },
+    {
+      key: "/admin/chat-support",
+      icon: <CustomerServiceOutlined />,
+      label: (
+        <Badge count={totalUnread} offset={[10, 0]} size="small">
+          <span>Chat Support</span>
+        </Badge>
+      ),
     },
   ];
 

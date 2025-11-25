@@ -236,4 +236,25 @@ export const adminAPI = {
   deleteReview: (id) => api.delete(`/reviews/${id}`),
 };
 
+// Support Chat APIs
+export const supportChatAPI = {
+  // User APIs
+  getOrCreateRoom: () => api.post("/support-chat/my-room"),
+  getMessages: (params) => api.get("/support-chat/messages", { params }),
+  sendMessage: (data) => api.post("/support-chat/messages", data),
+  markAsRead: (messageIds) =>
+    api.patch("/support-chat/mark-read", { messageIds }),
+
+  // Admin APIs
+  getAllRooms: (params) => api.get("/support-chat/admin/rooms", { params }),
+  getRoomById: (roomId) => api.get(`/support-chat/admin/rooms/${roomId}`),
+  getRoomMessages: (roomId, params) =>
+    api.get("/support-chat/admin/messages", { params: { roomId, ...params } }),
+  sendMessageAsAdmin: (data) => api.post("/support-chat/admin/messages", data),
+  markAdminRead: (roomId, messageIds) =>
+    api.patch("/support-chat/admin/mark-read", { roomId, messageIds }),
+  closeRoom: (roomId) => api.patch(`/support-chat/admin/close/${roomId}`),
+  getStats: () => api.get("/support-chat/admin/stats"),
+};
+
 export default api;

@@ -7,8 +7,10 @@ import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import path from "path";
 import { fileURLToPath } from "url";
+import { createServer } from "http";
 import connectDB from "./config/database.js";
 import swaggerSpec from "./config/swagger.js";
+import { initSocket } from "./socket/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,8 +21,14 @@ dotenv.config({ path: path.join(__dirname, "../.env") });
 // Initialize Express app
 const app = express();
 
+// Create HTTP server from Express app (needed for Socket.io)
+const server = createServer(app);
+
 // Connect to Database
 connectDB();
+
+// Initialize Socket.io
+initSocket(server);
 
 // Middleware
 app.use(helmet()); // Security headers
@@ -58,6 +66,7 @@ app.get("/", (req, res) => {
     status: "Server is running",
     documentation: `${req.protocol}://${req.get("host")}/api-docs`,
     version: "1.0.0",
+    socket: "Socket.io enabled",
   });
 });
 
@@ -75,6 +84,7 @@ import chatbotRoutes from "./routes/chatbot.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
+import supportChatRoutes from "./routes/support-chat.routes.js";
 
 // Use routes
 app.use("/api/auth", authRoutes);
@@ -90,6 +100,7 @@ app.use("/api/chatbot", chatbotRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/support-chat", supportChatRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -109,12 +120,13 @@ app.use((req, res) => {
   });
 });
 
-// Start server
+// Start server (use server.listen instead of app.listen for Socket.io)
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(
-    `Server is running on port ${PORT} in ${
+    `🚀 Server is running on port ${PORT} in ${
       process.env.NODE_ENV || "development"
     } mode`
   );
 });
+

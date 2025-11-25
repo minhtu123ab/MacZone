@@ -28,6 +28,7 @@ import ProductManagement from "./pages/admin/ProductManagement";
 import CategoryManagement from "./pages/admin/CategoryManagement";
 import OrderManagement from "./pages/admin/OrderManagement";
 import ReviewManagement from "./pages/admin/ReviewManagement";
+import ChatSupport from "./pages/admin/ChatSupport";
 import "./App.css";
 
 const { Content } = Layout;
@@ -106,6 +107,7 @@ function App() {
             <Route path="categories" element={<CategoryManagement />} />
             <Route path="orders" element={<OrderManagement />} />
             <Route path="reviews" element={<ReviewManagement />} />
+            <Route path="chat-support" element={<ChatSupport />} />
           </Route>
         </Routes>
 

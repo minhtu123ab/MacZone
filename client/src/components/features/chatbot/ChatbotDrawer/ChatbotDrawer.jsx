@@ -25,11 +25,15 @@ import {
   HistoryOutlined,
   CommentOutlined,
   EyeOutlined,
+  CustomerServiceOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import useChatbotStore from "../../../../store/useChatbotStore";
 import useCartStore from "../../../../store/useCartStore";
+import useSupportChatStore from "../../../../store/useSupportChatStore";
 import { chatbotAPI } from "../../../../services/api";
+import { initSocket } from "../../../../services/socket";
+import SupportChatTab from "../SupportChatTab";
 
 const { Text, Title } = Typography;
 const { TextArea } = Input;
@@ -60,6 +64,23 @@ export default function ChatbotDrawer() {
   } = useChatbotStore();
 
   const { addToCart } = useCartStore();
+
+  const { initializeSocket, cleanupSocket, unreadCount: supportUnreadCount } =
+    useSupportChatStore();
+
+  // Initialize socket when drawer opens
+  useEffect(() => {
+    if (drawerVisible) {
+      initSocket();
+      initializeSocket();
+    }
+
+    return () => {
+      if (!drawerVisible) {
+        cleanupSocket();
+      }
+    };
+  }, [drawerVisible]);
 
   // Auto scroll to bottom when messages change
   useEffect(() => {
@@ -632,6 +653,17 @@ export default function ChatbotDrawer() {
                   </div>
                 </div>
               ),
+            },
+            {
+              key: "support",
+              label: (
+                <Badge count={supportUnreadCount} offset={[10, 0]} size="small">
+                  <span className="text-sm">
+                    <CustomerServiceOutlined /> Hỗ trợ
+                  </span>
+                </Badge>
+              ),
+              children: <SupportChatTab />,
             },
             {
               key: "history",

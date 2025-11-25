@@ -26,6 +26,13 @@ const chatMessageSchema = new mongoose.Schema(
       enum: ["text", "image", "system"],
       default: "text",
     },
+    is_read: {
+      type: Boolean,
+      default: false,
+    },
+    read_at: {
+      type: Date,
+    },
   },
   {
     timestamps: true,
@@ -36,5 +43,6 @@ const chatMessageSchema = new mongoose.Schema(
 chatMessageSchema.index({ room_id: 1 });
 chatMessageSchema.index({ sender_id: 1 });
 chatMessageSchema.index({ createdAt: -1 });
+chatMessageSchema.index({ is_read: 1 });
 
 export default mongoose.model("ChatMessage", chatMessageSchema);

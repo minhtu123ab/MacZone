@@ -25,7 +25,7 @@ export const analyzeAndRecommendProducts = async (userStory, products) => {
     // You can also use: "gemini-1.5-flash", "gemini-1.5-pro", "gemini-2.0-flash-exp"
     const genAIInstance = getGenAI();
     const model = genAIInstance.getGenerativeModel({
-      model: "gemini-2.0-flash-exp",
+      model: "gemini-2.0-flash",
     });
 
     // Prepare products data for analysis
@@ -160,9 +160,8 @@ export const generatePriceRangeMessage = (categoryName, priceRanges) => {
       const maxFormatted = range.max
         ? range.max.toLocaleString("vi-VN")
         : "Trở lên";
-      return `${index + 1}. ${minFormatted}₫ - ${
-        range.max ? maxFormatted + "₫" : maxFormatted
-      }`;
+      return `${index + 1}. ${minFormatted}₫ - ${range.max ? maxFormatted + "₫" : maxFormatted
+        }`;
     })
     .join("\n");
 
@@ -189,8 +188,8 @@ export const generateStoryRequestMessage = (
 ) => {
   const priceRange = priceMax
     ? `${priceMin.toLocaleString("vi-VN")}₫ - ${priceMax.toLocaleString(
-        "vi-VN"
-      )}₫`
+      "vi-VN"
+    )}₫`
     : `Từ ${priceMin.toLocaleString("vi-VN")}₫ trở lên`;
 
   return `Tuyệt vời! Tôi đã hiểu:
