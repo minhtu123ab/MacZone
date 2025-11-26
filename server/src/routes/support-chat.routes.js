@@ -11,6 +11,7 @@ import {
   sendMessageAsAdmin,
   markAdminMessagesAsRead,
   closeChatRoom,
+  reopenChatRoom,
   getChatStats,
 } from "../controllers/support-chat.controller.js";
 import { protect, authorize } from "../middleware/auth.middleware.js";
@@ -345,6 +346,9 @@ router.patch(
  *         description: Chat room not found
  */
 router.patch("/admin/close/:id", protect, authorize("admin"), closeChatRoom);
+
+// Reopen chat room
+router.patch("/admin/reopen/:id", protect, authorize("admin"), reopenChatRoom);
 
 /**
  * @swagger
