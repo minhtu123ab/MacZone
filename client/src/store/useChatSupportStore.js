@@ -51,7 +51,7 @@ const useChatSupportStore = create((set, get) => ({
     // Listen for new message notifications
     onNewMessageNotification((data) => {
       const state = get();
-      
+
       // Update totalUnread count
       set({ totalUnread: state.totalUnread + 1 });
 
@@ -86,7 +86,48 @@ const useChatSupportStore = create((set, get) => ({
       if (data.roomId === state.selectedRoom?._id) {
         const exists = state.messages.some((m) => m._id === data.message._id);
         if (!exists) {
-          set({ messages: [...state.messages, data.message] });
+          // Auto mark as read if it's a user message and admin is viewing this room
+          let messageToAdd = data.message;
+
+          if (data.message.role === "user" && !data.message.is_read) {
+            const messageIds = [data.message._id];
+
+            // Call API to mark as read (don't wait)
+            supportChatAPI.markAdminRead(data.roomId, messageIds).catch(err => {
+              console.error("Error auto-marking message as read:", err);
+            });
+
+            // Emit socket event
+            markSocketRead(data.roomId, messageIds);
+
+            // Update message to show as read
+            messageToAdd = {
+              ...data.message,
+              is_read: true,
+              read_at: new Date()
+            };
+
+            // Update rooms list to decrease unread count
+            const updatedRooms = state.rooms.map((room) => {
+              if (room._id === data.roomId && room.unread_count_admin > 0) {
+                return { ...room, unread_count_admin: room.unread_count_admin - 1 };
+              }
+              return room;
+            });
+
+            // Recalculate total unread
+            const newTotalUnread = updatedRooms.reduce(
+              (sum, room) => sum + (room.unread_count_admin || 0),
+              0
+            );
+
+            set({
+              rooms: updatedRooms,
+              totalUnread: Math.max(0, newTotalUnread)
+            });
+          }
+
+          set({ messages: [...state.messages, messageToAdd] });
         }
       }
     });
@@ -255,14 +296,15 @@ const useChatSupportStore = create((set, get) => ({
     set({ sending: true });
 
     try {
+      // Send via API only (socket handler will broadcast via new_message event)
       const response = await supportChatAPI.sendMessageAsAdmin({
         roomId: state.selectedRoom._id,
         message: text,
         message_type: "text",
       });
 
-      // Also send via socket
-      sendSocketMessage(state.selectedRoom._id, text, "text");
+      // Message will be added via socket event listener (new_message)
+      // No need to send via socket separately - it causes duplicates
 
       set({ sending: false });
     } catch (error) {
@@ -298,6 +340,37 @@ const useChatSupportStore = create((set, get) => ({
       return true;
     } catch (error) {
       console.error("Error closing room:", error);
+      return false;
+    }
+  },
+
+  /**
+   * Reopen room
+   */
+  reopenRoom: async (roomId) => {
+    try {
+      const response = await supportChatAPI.reopenRoom(roomId);
+      const reopenedRoom = response.data.data;
+
+      // Update rooms list
+      const state = get();
+      const updatedRooms = state.rooms.map((room) => {
+        if (room._id === roomId) {
+          return reopenedRoom;
+        }
+        return room;
+      });
+
+      set({ rooms: updatedRooms });
+
+      // If this is selected room, update it
+      if (state.selectedRoom?._id === roomId) {
+        set({ selectedRoom: reopenedRoom });
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Error reopening room:", error);
       return false;
     }
   },

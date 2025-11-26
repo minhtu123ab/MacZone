@@ -49,6 +49,7 @@ export default function ChatSupport() {
     selectRoom,
     sendMessage,
     closeRoom,
+    reopenRoom,
     fetchStats,
   } = useChatSupportStore();
 
@@ -87,6 +88,16 @@ export default function ChatSupport() {
       antdMessage.success("Đã đóng cuộc trò chuyện");
     } else {
       antdMessage.error("Không thể đóng cuộc trò chuyện");
+    }
+  };
+
+  const handleReopenRoom = async () => {
+    if (!selectedRoom) return;
+    const success = await reopenRoom(selectedRoom._id);
+    if (success) {
+      antdMessage.success("Đã mở lại cuộc trò chuyện");
+    } else {
+      antdMessage.error("Không thể mở lại cuộc trò chuyện");
     }
   };
 
@@ -148,7 +159,7 @@ export default function ChatSupport() {
           <div style={{ height: "calc(100% - 120px)", overflowY: "auto" }}>
             {loading && rooms.length === 0 ? <div className="flex items-center justify-center h-full"><Spin /></div> : rooms.length === 0 ? <div className="flex items-center justify-center h-full"><Empty description="Chưa có cuộc trò chuyện nào" /></div> : (
               <List dataSource={rooms} renderItem={(room) => (
-                <List.Item className={`cursor-pointer hover:bg-gray-50 transition-colors ${selectedRoom?._id === room._id ? "bg-blue-50" : ""}`} onClick={() => selectRoom(room._id)} style={{ padding: "12px 16px" }}>
+                <List.Item className={`cursor-pointer rounded-xl hover:bg-slate-800 transition-colors ${selectedRoom?._id === room._id ? "bg-slate-800" : ""}`} onClick={() => selectRoom(room._id)} style={{ padding: "12px 16px" }}>
                   <List.Item.Meta
                     avatar={<Badge count={room.unread_count_admin} offset={[-5, 5]} size="small"><Avatar style={{ backgroundColor: "#52c41a" }} icon={<UserOutlined />} /></Badge>}
                     title={<div className="flex items-center justify-between"><span className="font-semibold">{room.user_id?.full_name || "Unknown"}</span><Tag color={room.status === "active" ? "green" : "default"} style={{ fontSize: "10px" }}>{room.status === "active" ? "Hoạt động" : "Đã đóng"}</Tag></div>}
@@ -166,12 +177,15 @@ export default function ChatSupport() {
               <div className="p-4 border-b">
                 <div className="flex items-center justify-between">
                   <Space><Avatar style={{ backgroundColor: "#52c41a" }} icon={<UserOutlined />} /><div><div className="font-semibold">{selectedRoom.user_id?.full_name}</div><div className="text-xs text-gray-500">{selectedRoom.user_id?.email}</div></div></Space>
-                  {selectedRoom.status === "active" && <Button danger icon={<CloseCircleOutlined />} onClick={handleCloseRoom}>Đóng chat</Button>}
+                  <Space>
+                    {selectedRoom.status === "active" && <Button danger icon={<CloseCircleOutlined />} onClick={handleCloseRoom}>Đóng chat</Button>}
+                    {selectedRoom.status === "closed" && <Button type="primary" onClick={handleReopenRoom}>Mở lại chat</Button>}
+                  </Space>
                 </div>
               </div>
-              <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-gray-50/50 to-white">
+              <div className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50/50 to-white">
                 {loading && messages.length === 0 ? <div className="flex items-center justify-center h-full"><Spin size="large" tip="Đang tải..." /></div> : messages.length === 0 ? <div className="flex items-center justify-center h-full"><Empty description="Chưa có tin nhắn" /></div> : (
-                  <>
+                  <div className="flex flex-col overflow-y-auto max-h-[70vh] p-4">
                     {messages.map((msg) => renderMessage(msg))}
                     {typing && (
                       <div className="flex items-center gap-2 mb-4">
@@ -186,13 +200,13 @@ export default function ChatSupport() {
                       </div>
                     )}
                     <div ref={messagesEndRef} />
-                  </>
+                  </div>
                 )}
               </div>
               {selectedRoom.status === "active" && (
                 <div className="p-4 border-t">
                   <div className="flex gap-2">
-                    <TextArea ref={messageInput} value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nhập tin nhắn..." autoSize={{ minRows: 1, maxRows: 4 }} disabled={sending} onPressEnter={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); }}} />
+                    <TextArea ref={messageInput} value={input} onChange={(e) => setInput(e.target.value)} placeholder="Nhập tin nhắn..." autoSize={{ minRows: 1, maxRows: 4 }} disabled={sending} onPressEnter={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } }} />
                     <Button type="primary" icon={<SendOutlined />} loading={sending} onClick={handleSend} disabled={!input.trim() || sending}>Gửi</Button>
                   </div>
                   <div className="text-xs text-gray-500 mt-2">Nhấn Enter để gửi, Shift+Enter để xuống dòng</div>

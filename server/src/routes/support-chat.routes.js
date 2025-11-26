@@ -352,6 +352,28 @@ router.patch("/admin/reopen/:id", protect, authorize("admin"), reopenChatRoom);
 
 /**
  * @swagger
+ * /api/support-chat/admin/reopen/{id}:
+ *   patch:
+ *     summary: Reopen chat room (Admin)
+ *     tags: [Support Chat]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Chat room reopened
+ *       404:
+ *         description: Chat room not found
+ */
+router.patch("/admin/reopen/:id", protect, authorize("admin"), reopenChatRoom);
+
+/**
+ * @swagger
  * /api/support-chat/admin/stats:
  *   get:
  *     summary: Get chat statistics (Admin)

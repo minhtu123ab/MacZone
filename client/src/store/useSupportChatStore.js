@@ -35,6 +35,9 @@ const useSupportChatStore = create((set, get) => ({
   unreadCount: 0,
   error: null,
 
+  // Internal state for preventing race conditions
+  fetchingRoomPromise: null,
+
   // Actions
   /**
    * Initialize socket and setup event listeners
@@ -125,34 +128,49 @@ const useSupportChatStore = create((set, get) => ({
   },
 
   /**
-   * Fetch or create chat room
+   * Fetch or create chat room (with race condition protection)
    */
   fetchRoom: async () => {
-    set({ loading: true, error: null });
-    try {
-      const response = await supportChatAPI.getOrCreateRoom();
-      const room = response.data.data;
+    const state = get();
 
-      set({
-        room,
-        loading: false,
-        unreadCount: room.unread_count_user || 0,
-      });
-
-      // Join room via socket
-      if (room._id) {
-        joinRoom(room._id);
-      }
-
-      return room;
-    } catch (error) {
-      console.error("Error fetching room:", error);
-      set({
-        loading: false,
-        error: error.response?.data?.message || "Failed to load chat room",
-      });
-      return null;
+    // If already fetching, return the existing promise
+    if (state.fetchingRoomPromise) {
+      return state.fetchingRoomPromise;
     }
+
+    const promise = (async () => {
+      set({ loading: true, error: null });
+      try {
+        const response = await supportChatAPI.getOrCreateRoom();
+        const room = response.data.data;
+
+        set({
+          room,
+          loading: false,
+          unreadCount: room.unread_count_user || 0,
+          fetchingRoomPromise: null, // Clear promise
+        });
+
+        // Join room via socket
+        if (room._id) {
+          joinRoom(room._id);
+        }
+
+        return room;
+      } catch (error) {
+        console.error("Error fetching room:", error);
+        set({
+          loading: false,
+          error: error.response?.data?.message || "Failed to load chat room",
+          fetchingRoomPromise: null, // Clear promise even on error
+        });
+        return null;
+      }
+    })();
+
+    // Store the promise to prevent concurrent calls
+    set({ fetchingRoomPromise: promise });
+    return promise;
   },
 
   /**
@@ -202,16 +220,14 @@ const useSupportChatStore = create((set, get) => ({
     set({ sending: true, error: null });
 
     try {
-      // Send via API (fallback)
+      // Send via API only (socket handler will broadcast via new_message event)
       const response = await supportChatAPI.sendMessage({
         message: text,
         message_type: "text",
       });
 
-      // Also send via socket for real-time
-      sendSocketMessage(roomId, text, "text");
-
-      // Message will be added via socket event listener
+      // Message will be added via socket event listener (new_message)
+      // No need to send via socket separately - it causes duplicates
 
       set({ sending: false });
     } catch (error) {

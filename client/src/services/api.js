@@ -254,6 +254,7 @@ export const supportChatAPI = {
   markAdminRead: (roomId, messageIds) =>
     api.patch("/support-chat/admin/mark-read", { roomId, messageIds }),
   closeRoom: (roomId) => api.patch(`/support-chat/admin/close/${roomId}`),
+  reopenRoom: (roomId) => api.patch(`/support-chat/admin/reopen/${roomId}`),
   getStats: () => api.get("/support-chat/admin/stats"),
 };
 

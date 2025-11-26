@@ -78,7 +78,7 @@ const AdminLayout = () => {
       key: "/admin/chat-support",
       icon: <CustomerServiceOutlined />,
       label: (
-        <Badge count={totalUnread} offset={[10, 0]} size="small">
+        <Badge className="text-gray-400 hover:text-white" count={totalUnread} offset={[10, 0]} size="small">
           <span>Chat Support</span>
         </Badge>
       ),

@@ -54,6 +54,10 @@ chatRoomSchema.index({ status: 1 });
 chatRoomSchema.index({ closed_at: 1 });
 chatRoomSchema.index({ last_message_at: -1 });
 
+// Unique index to ensure only one room per user
+// This prevents creating multiple rooms for the same user
+chatRoomSchema.index({ user_id: 1 }, { unique: true });
+
 // Ensure virtuals are included in JSON
 chatRoomSchema.set("toJSON", { virtuals: true });
 chatRoomSchema.set("toObject", { virtuals: true });
