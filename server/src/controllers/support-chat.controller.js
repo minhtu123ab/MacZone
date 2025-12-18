@@ -143,6 +143,26 @@ export const sendMessage = async (req, res, next) => {
       "full_name email role"
     );
 
+    // Emit socket event for real-time update
+    const { getIO } = await import("../socket/index.js");
+    try {
+      const io = getIO();
+
+      // Emit to all users in the room (including user who sent it and admin)
+      io.to(room._id.toString()).emit("new_message", {
+        message: populatedMessage,
+        roomId: room._id.toString(),
+      });
+
+      // Also emit notification to admins
+      io.emit("new_message_notification", {
+        message: populatedMessage,
+        roomId: room._id.toString(),
+      });
+    } catch (socketError) {
+      console.log("Socket not available, skipping real-time broadcast");
+    }
+
     res.status(201).json({
       success: true,
       message: "Message sent successfully",
@@ -393,6 +413,20 @@ export const sendMessageAsAdmin = async (req, res, next) => {
       "sender_id",
       "full_name email role"
     );
+
+    // Emit socket event for real-time update
+    const { getIO } = await import("../socket/index.js");
+    try {
+      const io = getIO();
+
+      // Emit to all users in the room (including admin who sent it)
+      io.to(roomId).emit("new_message", {
+        message: populatedMessage,
+        roomId,
+      });
+    } catch (socketError) {
+      console.log("Socket not available, skipping real-time broadcast");
+    }
 
     res.status(201).json({
       success: true,

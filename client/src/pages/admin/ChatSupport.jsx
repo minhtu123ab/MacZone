@@ -183,7 +183,7 @@ export default function ChatSupport() {
                   </Space>
                 </div>
               </div>
-              <div className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50/50 to-white">
+              <div className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50/50 to-white rounded-2xl">
                 {loading && messages.length === 0 ? <div className="flex items-center justify-center h-full"><Spin size="large" tip="Đang tải..." /></div> : messages.length === 0 ? <div className="flex items-center justify-center h-full"><Empty description="Chưa có tin nhắn" /></div> : (
                   <div className="flex flex-col overflow-y-auto max-h-[70vh] p-4">
                     {messages.map((msg) => renderMessage(msg))}

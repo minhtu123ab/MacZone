@@ -48,6 +48,7 @@ const useChatSupportStore = create((set, get) => ({
       return;
     }
 
+
     // Listen for new message notifications
     onNewMessageNotification((data) => {
       const state = get();
@@ -79,7 +80,7 @@ const useChatSupportStore = create((set, get) => ({
       set({ rooms: updatedRooms });
     });
 
-    // Listen for new messages in current room
+    // Listen for new messages in current room (for admin's own messages and user messages)
     onNewMessage((data) => {
       const state = get();
 
@@ -130,7 +131,22 @@ const useChatSupportStore = create((set, get) => ({
           set({ messages: [...state.messages, messageToAdd] });
         }
       }
+
+      // Update room's last message in rooms list (for all messages including admin's)
+      const updatedRooms = state.rooms.map((room) => {
+        if (room._id === data.roomId) {
+          return {
+            ...room,
+            last_message: data.message.message,
+            last_message_at: data.message.createdAt,
+          };
+        }
+        return room;
+      });
+
+      set({ rooms: updatedRooms });
     });
+
 
     // Listen for typing
     onUserTyping((data) => {

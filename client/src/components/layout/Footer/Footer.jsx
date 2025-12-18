@@ -11,7 +11,7 @@ export default function Footer() {
           <img src="/logo-maczone-text.svg" alt="MacZone" className="h-10" />
         </div>
         <Paragraph className="!text-apple-gray">
-          © 2025 MacZone. Premium Apple Products Store.
+          © 2026 MacZone. Premium Apple Products Store.
         </Paragraph>
       </div>
     </footer>
