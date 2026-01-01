@@ -1,7 +1,9 @@
 import axios from "axios";
 import { STORAGE_KEYS } from "../constants";
 
-const API_URL = "/api";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+const API_URL = BACKEND_URL + "/api";
 
 // Create axios instance
 const api = axios.create({
