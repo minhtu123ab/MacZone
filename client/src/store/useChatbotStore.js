@@ -65,9 +65,15 @@ const useChatbotStore = create((set, get) => ({
       return { success: true };
     } catch (error) {
       set({ loading: false });
-      message.error(
-        error.response?.data?.message || "Không thể kết nối với chatbot"
-      );
+
+      // Add friendly error message to chat with restart options
+      get().addMessage({
+        type: "bot",
+        content: "😔 Xin lỗi, hiện tại không thể kết nối với AI. Vui lòng thử lại sau hoặc bắt đầu cuộc trò chuyện mới.",
+        data: { showErrorOptions: true },
+      });
+
+      set({ currentStep: "error" });
       return { success: false, error };
     }
   },
@@ -102,9 +108,15 @@ const useChatbotStore = create((set, get) => ({
       return { success: true };
     } catch (error) {
       set({ loading: false });
-      message.error(
-        error.response?.data?.message || "Không thể lấy khoảng giá"
-      );
+
+      // Add friendly error message to chat with restart options
+      get().addMessage({
+        type: "bot",
+        content: "😔 Xin lỗi, đã có lỗi xảy ra. Vui lòng thử lại hoặc bắt đầu cuộc trò chuyện mới.",
+        data: { showErrorOptions: true },
+      });
+
+      set({ currentStep: "error" });
       return { success: false, error };
     }
   },
@@ -141,9 +153,15 @@ const useChatbotStore = create((set, get) => ({
       return { success: true };
     } catch (error) {
       set({ loading: false });
-      message.error(
-        error.response?.data?.message || "Không thể lấy yêu cầu mô tả"
-      );
+
+      // Add friendly error message to chat with restart options
+      get().addMessage({
+        type: "bot",
+        content: "😔 Xin lỗi, đã có lỗi xảy ra. Vui lòng thử lại hoặc bắt đầu cuộc trò chuyện mới.",
+        data: { showErrorOptions: true },
+      });
+
+      set({ currentStep: "error" });
       return { success: false, error };
     }
   },
@@ -218,15 +236,14 @@ const useChatbotStore = create((set, get) => ({
         loading: false,
       }));
 
-      const errorMsg =
-        error.response?.data?.message || "Không thể lấy đề xuất sản phẩm";
-
+      // Add friendly error message to chat with restart options
       get().addMessage({
         type: "bot",
-        content: `😔 ${errorMsg}`,
+        content: "😔 Xin lỗi, không thể lấy đề xuất sản phẩm. Vui lòng thử lại hoặc bắt đầu cuộc trò chuyện mới.",
+        data: { showErrorOptions: true },
       });
 
-      message.error(errorMsg);
+      set({ currentStep: "error" });
       return { success: false, error };
     }
   },
