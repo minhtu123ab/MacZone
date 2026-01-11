@@ -13,7 +13,7 @@ import {
   Descriptions,
   Divider,
 } from "antd";
-import { EyeOutlined, ReloadOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeOutlined, ReloadOutlined } from "@ant-design/icons";
 import { adminAPI } from "../../services/api";
 
 const { Option } = Select;
@@ -31,6 +31,7 @@ const OrderManagement = () => {
     payment_status: "",
   });
   const [detailModalVisible, setDetailModalVisible] = useState(false);
+  const [isView, setIsView] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [updateForm] = Form.useForm();
 
@@ -72,7 +73,7 @@ const OrderManagement = () => {
     });
   };
 
-  const handleViewDetail = async (order) => {
+  const handleViewDetail = async (order, isView = false) => {
     setSelectedOrder(order);
     updateForm.setFieldsValue({
       status: order.status,
@@ -80,6 +81,8 @@ const OrderManagement = () => {
       tracking_code: order.tracking_code,
     });
     setDetailModalVisible(true);
+    setIsView(isView);
+    console.log(order);
   };
 
   const handleUpdateOrder = async (values) => {
@@ -205,13 +208,20 @@ const OrderManagement = () => {
       title: "Actions",
       key: "actions",
       fixed: "right",
-      width: 100,
+      width: 120,
       render: (_, record) => (
-        <Button
-          type="text"
-          icon={<EyeOutlined />}
-          onClick={() => handleViewDetail(record)}
-        />
+        <div className="flex gap-2">
+          <Button
+            type="text"
+            icon={<EyeOutlined />}
+            onClick={() => handleViewDetail(record, true)}
+          />
+          <Button
+            type="text"
+            icon={<EditOutlined />}
+            onClick={() => handleViewDetail(record, false)}
+          />
+        </div>
       ),
     },
   ];
@@ -363,7 +373,7 @@ const OrderManagement = () => {
               onFinish={handleUpdateOrder}
             >
               <Form.Item label="Order Status" name="status">
-                <Select>
+                <Select disabled={isView}>
                   <Option value="pending">Pending</Option>
                   <Option value="confirmed">Confirmed</Option>
                   <Option value="shipping">Shipping</Option>
@@ -373,7 +383,7 @@ const OrderManagement = () => {
               </Form.Item>
 
               <Form.Item label="Payment Status" name="payment_status">
-                <Select>
+                <Select disabled={isView}>
                   <Option value="unpaid">Unpaid</Option>
                   <Option value="paid">Paid</Option>
                   <Option value="refunded">Refunded</Option>
@@ -381,14 +391,16 @@ const OrderManagement = () => {
               </Form.Item>
 
               <Form.Item label="Tracking Code" name="tracking_code">
-                <Input placeholder="Enter tracking code" />
+                <Input disabled={isView} placeholder="Enter tracking code" />
               </Form.Item>
 
               <Form.Item>
                 <Space>
-                  <Button type="primary" htmlType="submit">
-                    Update Order
-                  </Button>
+                  {!isView && (
+                    <Button type="primary" htmlType="submit">
+                      Update Order
+                    </Button>
+                  )}
                   <Button onClick={() => setDetailModalVisible(false)}>
                     Cancel
                   </Button>

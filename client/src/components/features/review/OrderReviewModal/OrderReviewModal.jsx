@@ -81,7 +81,7 @@ function ReviewItemForm({ item, onSuccess }) {
             placeholder="Share your experience with this product..."
             maxLength={1000}
             showCount
-            className="bg-white/5 border-white/10 text-white placeholder-gray-500"
+            className="bg-white/5 border-white/10 text-white placeholder-gray-500 mb-2"
           />
         </Form.Item>
 
@@ -119,7 +119,7 @@ export default function OrderReviewModal() {
   return (
     <Modal
       title={
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 bg-[#1e1e1e]">
           <StarOutlined className="text-amber-500 text-xl" />
           <div>
             <div className="text-white">Write Your Reviews</div>
@@ -149,7 +149,7 @@ export default function OrderReviewModal() {
         },
       }}
     >
-      <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
+      <div className="space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar bg-[#1e1e1e]">
         {items.map((item, index) => (
           <div key={item._id}>
             <ReviewItemForm item={item} />
