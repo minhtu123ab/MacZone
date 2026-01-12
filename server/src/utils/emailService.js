@@ -62,7 +62,7 @@ export const sendForgotPasswordEmail = async (user, code) => {
               </div>
             </div>
             <div class="footer">
-              <p>© 2024 MacZone E-Commerce. All rights reserved.</p>
+              <p>© 2026 MacZone E-Commerce. All rights reserved.</p>
               <p>This is an automated email. Please do not reply.</p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export const sendForgotPasswordEmail = async (user, code) => {
         
         If you didn't request this, please ignore this email.
         
-        © 2024 MacZone E-Commerce
+        © 2026 MacZone E-Commerce
       `,
     };
 
@@ -345,7 +345,7 @@ export const sendOrderConfirmationEmail = async (user, order, orderItems) => {
 
             <div class="footer">
               <p style="margin: 0 0 10px 0;"><strong>MacZone E-Commerce</strong></p>
-              <p style="margin: 0;">© 2024 MacZone. All rights reserved.</p>
+              <p style="margin: 0;">© 2026 MacZone. All rights reserved.</p>
               <p style="margin: 10px 0 0 0; color: #999;">Email này được gửi tự động, vui lòng không trả lời.</p>
             </div>
           </div>
@@ -375,7 +375,7 @@ export const sendOrderConfirmationEmail = async (user, order, orderItems) => {
         
         Cảm ơn bạn đã mua hàng tại MacZone!
         
-        © 2024 MacZone E-Commerce
+        © 2026 MacZone E-Commerce
       `,
     };
 
@@ -573,7 +573,7 @@ export const sendOrderCompletedEmail = async (user, order, orderItems) => {
             <div class="footer">
               <p style="margin: 0 0 10px 0;"><strong>MacZone E-Commerce</strong></p>
               <p style="margin: 0;">Cảm ơn bạn đã là khách hàng của chúng tôi! ❤️</p>
-              <p style="margin: 10px 0 0 0; color: #999;">© 2024 MacZone. All rights reserved.</p>
+              <p style="margin: 10px 0 0 0; color: #999;">© 2026 MacZone. All rights reserved.</p>
             </div>
           </div>
         </body>
@@ -597,7 +597,7 @@ export const sendOrderCompletedEmail = async (user, order, orderItems) => {
           process.env.CLIENT_URL || "http://localhost:3000"
         }/orders/${order._id}
         
-        © 2024 MacZone E-Commerce
+        © 2026 MacZone E-Commerce
       `,
     };
 
