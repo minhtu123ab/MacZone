@@ -162,7 +162,7 @@ export default function ChatSupport() {
 
   return (
     <div className="p-6">
-      {stats && (
+      {/* {stats && (
         <div className="grid grid-cols-4 gap-4 mb-6">
           <Card size="small">
             <div className="text-center">
@@ -197,7 +197,7 @@ export default function ChatSupport() {
             </div>
           </Card>
         </div>
-      )}
+      )} */}
 
       <div
         className="grid grid-cols-12 gap-4"
@@ -224,7 +224,7 @@ export default function ChatSupport() {
               onChange={(e) => setSearchText(e.target.value)}
               className="mb-2"
             />
-            <Select
+            {/* <Select
               style={{ width: "100%" }}
               placeholder="Lọc theo trạng thái"
               value={statusFilter}
@@ -234,7 +234,7 @@ export default function ChatSupport() {
               <Select.Option value="">Tất cả</Select.Option>
               <Select.Option value="active">Đang hoạt động</Select.Option>
               <Select.Option value="closed">Đã đóng</Select.Option>
-            </Select>
+            </Select> */}
           </div>
           <div style={{ height: "calc(100% - 120px)", overflowY: "auto" }}>
             {loading && rooms.length === 0 ? (
@@ -333,7 +333,7 @@ export default function ChatSupport() {
                       </div>
                     </div>
                   </Space>
-                  <Space>
+                  {/* <Space>
                     {selectedRoom.status === "active" && (
                       <Button
                         danger
@@ -348,7 +348,7 @@ export default function ChatSupport() {
                         Mở lại chat
                       </Button>
                     )}
-                  </Space>
+                  </Space> */}
                 </div>
               </div>
               <div className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50/50 to-white rounded-2xl">

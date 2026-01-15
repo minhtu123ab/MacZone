@@ -148,7 +148,7 @@ export default function HomePage() {
             <div className="relative inline-block">
               <Title
                 level={1}
-                className="!text-7xl !mb-8 relative"
+                className="relative !mb-8 !text-5xl sm:!text-6xl md:!text-7xl whitespace-nowrap"
                 style={{
                   fontFamily: "'Orbitron', sans-serif",
                   fontWeight: 900,
@@ -165,6 +165,7 @@ export default function HomePage() {
               >
                 {APP_NAME}
               </Title>
+
               <div
                 className="absolute inset-0 -z-10"
                 style={{
