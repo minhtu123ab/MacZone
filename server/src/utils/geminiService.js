@@ -264,7 +264,7 @@ export const analyzeAndRecommendProducts = async (userStory, products) => {
       ====================
 
       Bạn là một chuyên gia tư vấn sản phẩm công nghệ Apple. 
-      Nhiệm vụ của bạn là phân tích nhu cầu của khách hàng và đề xuất 3 sản phẩm phù hợp nhất.
+      Nhiệm vụ của bạn là phân tích nhu cầu của khách hàng và đề xuất 3 sản phẩm PHÙ HỢP NHẤT.
 
       NHU CẦU KHÁCH HÀNG:
       ${userStory}
@@ -272,9 +272,12 @@ export const analyzeAndRecommendProducts = async (userStory, products) => {
       DANH SÁCH SẢN PHẨM:
       ${JSON.stringify(productsData, null, 2)}
 
-      YÊU CẦU:
-      - Chọn TỐI ĐA 3 sản phẩm phù hợp nhất
-      - Xếp hạng từ 1 đến 3 (1 là phù hợp nhất)
+      YÊU CẦU QUAN TRỌNG:
+      - CHỈ gợi ý sản phẩm THỰC SỰ LIÊN QUAN đến nhu cầu cụ thể của khách hàng
+      - Nếu chỉ có 1-2 sản phẩm phù hợp thì CHỈ TRẢ VỀ 1-2 sản phẩm đó
+      - KHÔNG gợi ý sản phẩm không liên quan chỉ để điền đủ 3
+      - Tối đa 3 sản phẩm, xếp hạng từ 1 (phù hợp nhất)
+      - Lý do gợi ý PHẢI liên quan TRỰC TIẾP đến nhu cầu khách mô tả
       - Mỗi sản phẩm giải thích 2–3 câu, tiếng Việt
 
       ĐỊNH DẠNG TRẢ LỜI (JSON BẮT BUỘC):
