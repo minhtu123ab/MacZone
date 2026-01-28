@@ -65,8 +65,11 @@ export default function ChatbotDrawer() {
 
   const { addToCart } = useCartStore();
 
-  const { initializeSocket, cleanupSocket, unreadCount: supportUnreadCount } =
-    useSupportChatStore();
+  const {
+    initializeSocket,
+    cleanupSocket,
+    unreadCount: supportUnreadCount,
+  } = useSupportChatStore();
 
   // Initialize socket when drawer opens
   useEffect(() => {
@@ -136,15 +139,17 @@ export default function ChatbotDrawer() {
         className={`flex ${isBot ? "justify-start" : "justify-end"} mb-4`}
       >
         <div
-          className={`flex items-start gap-2 max-w-[80%] ${isBot ? "flex-row" : "flex-row-reverse"
-            }`}
+          className={`flex items-start gap-2 max-w-[80%] ${
+            isBot ? "flex-row" : "flex-row-reverse"
+          }`}
         >
           {/* Avatar */}
           <div
-            className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${isBot
-              ? "bg-gradient-to-br from-purple-500 to-purple-600"
-              : "bg-gradient-to-br from-blue-500 to-blue-600"
-              }`}
+            className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+              isBot
+                ? "bg-gradient-to-br from-purple-500 to-purple-600"
+                : "bg-gradient-to-br from-blue-500 to-blue-600"
+            }`}
           >
             {isBot ? (
               <RobotOutlined className="text-white text-sm" />
@@ -155,10 +160,11 @@ export default function ChatbotDrawer() {
 
           {/* Message bubble */}
           <div
-            className={`rounded-2xl px-4 py-3 ${isBot
-              ? "bg-gray-100 text-gray-800"
-              : "bg-gradient-to-br from-blue-500 to-blue-600 text-white"
-              }`}
+            className={`rounded-2xl px-4 py-3 ${
+              isBot
+                ? "bg-gray-100 text-gray-800"
+                : "bg-gradient-to-br from-blue-500 to-blue-600 text-white"
+            }`}
           >
             {msg.isLoading ? (
               <div className="flex items-center gap-2">
@@ -256,8 +262,8 @@ export default function ChatbotDrawer() {
                                   rec.rank === 1
                                     ? "#ffd700"
                                     : rec.rank === 2
-                                      ? "#c0c0c0"
-                                      : "#cd7f32",
+                                    ? "#c0c0c0"
+                                    : "#cd7f32",
                                 color: "#000",
                                 fontWeight: "bold",
                               }}
@@ -406,6 +412,7 @@ export default function ChatbotDrawer() {
           </Button>,
         ]}
         width={600}
+        style={{ top: 20 }}
       >
         {selectedHistory && (
           <div className="space-y-4">
@@ -444,13 +451,14 @@ export default function ChatbotDrawer() {
                   <div className="font-semibold">
                     {selectedHistory.priceRange
                       ? `${(selectedHistory.priceRange.min / 1000000).toFixed(
-                        0
-                      )}-${selectedHistory.priceRange.max
-                        ? (
-                          selectedHistory.priceRange.max / 1000000
-                        ).toFixed(0)
-                        : "∞"
-                      } triệu`
+                          0
+                        )}-${
+                          selectedHistory.priceRange.max
+                            ? (
+                                selectedHistory.priceRange.max / 1000000
+                              ).toFixed(0)
+                            : "∞"
+                        } triệu`
                       : "N/A"}
                   </div>
                 </div>
@@ -497,8 +505,8 @@ export default function ChatbotDrawer() {
                             rec.rank === 1
                               ? "#ffd700"
                               : rec.rank === 2
-                                ? "#c0c0c0"
-                                : "#cd7f32",
+                              ? "#c0c0c0"
+                              : "#cd7f32",
                           color: "#000",
                         }}
                       />
@@ -747,8 +755,8 @@ export default function ChatbotDrawer() {
                                     -
                                     {item.priceRange.max
                                       ? (item.priceRange.max / 1000000).toFixed(
-                                        0
-                                      )
+                                          0
+                                        )
                                       : "∞"}{" "}
                                     triệu
                                   </Tag>
