@@ -110,11 +110,7 @@ export default function ChatbotDrawer() {
   };
 
   const handleAddToCart = (product, variantId) => {
-    addToCart({
-      product_id: product._id,
-      variant_id: variantId,
-      quantity: 1,
-    });
+    addToCart(product._id, variantId, 1);
   };
 
   const handleViewProduct = (productId) => {
@@ -262,8 +258,8 @@ export default function ChatbotDrawer() {
                                   rec.rank === 1
                                     ? "#ffd700"
                                     : rec.rank === 2
-                                    ? "#c0c0c0"
-                                    : "#cd7f32",
+                                      ? "#c0c0c0"
+                                      : "#cd7f32",
                                 color: "#000",
                                 fontWeight: "bold",
                               }}
@@ -295,7 +291,7 @@ export default function ChatbotDrawer() {
                                 onClick={() =>
                                   handleAddToCart(
                                     rec.product,
-                                    rec.product.variantId
+                                    rec.product.variantId,
                                   )
                                 }
                               >
@@ -440,7 +436,7 @@ export default function ChatbotDrawer() {
                         day: "2-digit",
                         hour: "2-digit",
                         minute: "2-digit",
-                      }
+                      },
                     )}
                   </div>
                 </div>
@@ -451,7 +447,7 @@ export default function ChatbotDrawer() {
                   <div className="font-semibold">
                     {selectedHistory.priceRange
                       ? `${(selectedHistory.priceRange.min / 1000000).toFixed(
-                          0
+                          0,
                         )}-${
                           selectedHistory.priceRange.max
                             ? (
@@ -505,8 +501,8 @@ export default function ChatbotDrawer() {
                             rec.rank === 1
                               ? "#ffd700"
                               : rec.rank === 2
-                              ? "#c0c0c0"
-                              : "#cd7f32",
+                                ? "#c0c0c0"
+                                : "#cd7f32",
                           color: "#000",
                         }}
                       />
@@ -755,7 +751,7 @@ export default function ChatbotDrawer() {
                                     -
                                     {item.priceRange.max
                                       ? (item.priceRange.max / 1000000).toFixed(
-                                          0
+                                          0,
                                         )
                                       : "∞"}{" "}
                                     triệu
@@ -776,7 +772,7 @@ export default function ChatbotDrawer() {
                                     day: "2-digit",
                                     hour: "2-digit",
                                     minute: "2-digit",
-                                  }
+                                  },
                                 )}
                               </Text>
                             </div>
