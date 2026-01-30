@@ -322,8 +322,6 @@ export const analyzeAndRecommendProducts = async (userStory, products) => {
   }
 };
 
-/* ===== CÁC HÀM DƯỚI GIỮ NGUYÊN ===== */
-
 export const generateGreetingMessage = (categories) => {
   const categoryList = categories
     .map((cat, index) => `${index + 1}. ${cat.name}`)

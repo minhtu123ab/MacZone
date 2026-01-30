@@ -111,6 +111,7 @@ export default function CartDrawer() {
               size="large"
               block
               onClick={handleViewCart}
+              disabled={cart.has_insufficient_stock}
               className="!h-12 !text-base !font-bold !bg-apple-blue hover:!bg-apple-blue-light !border-none shadow-lg shadow-apple-blue/50"
             >
               View Cart & Checkout
@@ -219,8 +220,8 @@ export default function CartDrawer() {
                 </div>
 
                 {/* Stock Warning */}
-                {item.quantity >= item.variant.stock && (
-                  <Text className="!text-yellow-500 !text-xs !block">
+                {item.quantity > item.variant.stock && (
+                  <Text className="!text-red-500 !text-xs !block">
                     Maximum stock reached ({item.variant.stock} available)
                   </Text>
                 )}

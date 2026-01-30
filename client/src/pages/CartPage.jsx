@@ -10,6 +10,8 @@ import {
   Divider,
   Breadcrumb,
   Popconfirm,
+  Alert,
+  Badge,
 } from "antd";
 import {
   ShoppingCartOutlined,
@@ -17,6 +19,7 @@ import {
   HomeOutlined,
   ShoppingOutlined,
   CreditCardOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
 import PageLayout from "../components/layout/PageLayout";
 import useCartStore from "../store/useCartStore";
@@ -222,6 +225,16 @@ export default function CartPage() {
                               <span className="px-3 py-1 rounded-full glass border border-white/20 text-apple-blue text-xs">
                                 {item.variant.storage}
                               </span>
+                              {item.is_insufficient_stock && (
+                                <Badge
+                                  count={
+                                    <span className="flex items-center gap-1 px-2 py-1 rounded-full bg-red-500/90 text-white text-xs font-semibold">
+                                      <WarningOutlined />
+                                      Insufficient Stock
+                                    </span>
+                                  }
+                                />
+                              )}
                             </div>
                           </div>
                           <Popconfirm
@@ -258,12 +271,17 @@ export default function CartPage() {
                               }
                               size="large"
                               className="!w-32"
+                              status={item.is_insufficient_stock ? "error" : ""}
                             />
-                            {item.quantity >= item.variant.stock && (
+                            {item.is_insufficient_stock ? (
+                              <Text className="!text-red-500 !text-xs !block mt-2 !font-semibold">
+                                ⚠️ Only {item.variant.stock} available!
+                              </Text>
+                            ) : item.quantity >= item.variant.stock ? (
                               <Text className="!text-yellow-500 !text-xs !block mt-2">
                                 Max stock: {item.variant.stock}
                               </Text>
-                            )}
+                            ) : null}
                           </div>
                           <div className="text-right">
                             <Text className="!text-apple-gray !text-sm !block">
@@ -290,6 +308,17 @@ export default function CartPage() {
                   <Title level={4} className="!text-white !mb-6">
                     Order Summary
                   </Title>
+
+                  {cart.has_insufficient_stock && (
+                    <Alert
+                      message="Insufficient Stock"
+                      description="Some items in your cart exceed available stock. Please adjust quantities before checkout."
+                      type="error"
+                      showIcon
+                      icon={<WarningOutlined />}
+                      className="!mb-4 !bg-red-500/10 !border-red-500/50"
+                    />
+                  )}
 
                   <div className="space-y-4">
                     <div className="flex justify-between">
@@ -326,7 +355,8 @@ export default function CartPage() {
                       block
                       icon={<CreditCardOutlined />}
                       onClick={handleCheckout}
-                      className="!mt-6 !h-12 !text-base !font-bold !bg-apple-blue hover:!bg-apple-blue-light !border-none shadow-lg shadow-apple-blue/50"
+                      disabled={cart.has_insufficient_stock}
+                      className="!mt-6 !h-12 !text-base !font-bold !bg-apple-blue hover:!bg-apple-blue-light !border-none shadow-lg shadow-apple-blue/50 disabled:!bg-gray-600 disabled:!opacity-50 disabled:!cursor-not-allowed"
                     >
                       Proceed to Checkout
                     </Button>

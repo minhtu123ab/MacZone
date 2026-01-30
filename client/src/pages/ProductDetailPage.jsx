@@ -121,17 +121,12 @@ export default function ProductDetailPage() {
     return variants.find((v) => v.color === color && v.storage === storage);
   };
 
-  // Check if a color is available for current storage selection
+  // Check if a color is available (at ANY storage)
   const isColorAvailable = (color) => {
-    if (!selectedVariant?.storage) {
-      // If no storage selected, check if color has any stock
-      return variants.some(
-        (v) => v.color === color && v.is_active && v.stock > 0
-      );
-    }
-    // Check if this specific color + storage combo exists and has stock
-    const variant = getVariantByOptions(color, selectedVariant.storage);
-    return variant && variant.is_active && variant.stock > 0;
+    // Color is available if it has stock at ANY storage
+    return variants.some(
+      (v) => v.color === color && v.is_active && v.stock > 0
+    );
   };
 
   // Check if a storage is available for current color selection
@@ -312,10 +307,18 @@ export default function ProductDetailPage() {
                             type={isSelected ? "primary" : "default"}
                             disabled={!available}
                             onClick={() => {
-                              const variant = getVariantByOptions(
-                                color,
-                                selectedVariant?.storage || storages[0]
-                              );
+                              // Try to find variant with current storage first
+                              let variant = selectedVariant?.storage
+                                ? getVariantByOptions(color, selectedVariant.storage)
+                                : null;
+                              
+                              // If not found or out of stock, find first available variant with this color
+                              if (!variant || !variant.is_active || variant.stock === 0) {
+                                variant = variants.find(
+                                  (v) => v.color === color && v.is_active && v.stock > 0
+                                );
+                              }
+                              
                               if (variant) setSelectedVariant(variant);
                             }}
                             className={`!px-6 !rounded-xl transition-all duration-300 ${

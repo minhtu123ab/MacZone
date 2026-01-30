@@ -307,6 +307,13 @@ const OrderManagement = () => {
               <Descriptions.Item label="Payment Method">
                 {selectedOrder.payment_method}
               </Descriptions.Item>
+              {selectedOrder.transfer_reference && (
+                <Descriptions.Item label="Transfer Reference">
+                  <strong style={{ color: "#52c41a" }}>
+                    {selectedOrder.transfer_reference}
+                  </strong>
+                </Descriptions.Item>
+              )}
               <Descriptions.Item label="Address" span={2}>
                 {selectedOrder.shipping_address}
               </Descriptions.Item>

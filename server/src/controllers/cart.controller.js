@@ -45,7 +45,7 @@ export const getCart = async (req, res, next) => {
         item.product_id &&
         item.variant_id &&
         item.product_id.is_active &&
-        item.variant_id.is_active
+        item.variant_id.is_active,
     );
 
     // Remove inactive items from cart
@@ -55,7 +55,7 @@ export const getCart = async (req, res, next) => {
           !item.product_id ||
           !item.variant_id ||
           !item.product_id.is_active ||
-          !item.variant_id.is_active
+          !item.variant_id.is_active,
       )
       .map((item) => item._id);
 
@@ -66,39 +66,48 @@ export const getCart = async (req, res, next) => {
     // Calculate totals
     const total_items = activeItems.reduce(
       (sum, item) => sum + item.quantity,
-      0
+      0,
     );
     const total_price = activeItems.reduce(
       (sum, item) => sum + item.variant_id.price * item.quantity,
-      0
+      0,
     );
 
-    // Format response
-    const formattedItems = activeItems.map((item) => ({
-      _id: item._id,
-      product: {
-        _id: item.product_id._id,
-        name: item.product_id.name,
-        description: item.product_id.description,
-        thumbnail_url: item.product_id.thumbnail_url,
-        category: item.product_id.category_id
-          ? {
-              _id: item.product_id.category_id._id,
-              name: item.product_id.category_id.name,
-            }
-          : null,
-      },
-      variant: {
-        _id: item.variant_id._id,
-        color: item.variant_id.color,
-        storage: item.variant_id.storage,
-        price: item.variant_id.price,
-        stock: item.variant_id.stock,
-        image_url: item.variant_id.image_url,
-      },
-      quantity: item.quantity,
-      subtotal: item.variant_id.price * item.quantity,
-    }));
+    // Check stock availability and format response
+    const formattedItems = activeItems.map((item) => {
+      const isInsufficientStock = item.quantity > item.variant_id.stock;
+      return {
+        _id: item._id,
+        product: {
+          _id: item.product_id._id,
+          name: item.product_id.name,
+          description: item.product_id.description,
+          thumbnail_url: item.product_id.thumbnail_url,
+          category: item.product_id.category_id
+            ? {
+                _id: item.product_id.category_id._id,
+                name: item.product_id.category_id.name,
+              }
+            : null,
+        },
+        variant: {
+          _id: item.variant_id._id,
+          color: item.variant_id.color,
+          storage: item.variant_id.storage,
+          price: item.variant_id.price,
+          stock: item.variant_id.stock,
+          image_url: item.variant_id.image_url,
+        },
+        quantity: item.quantity,
+        subtotal: item.variant_id.price * item.quantity,
+        is_insufficient_stock: isInsufficientStock,
+      };
+    });
+
+    // Check if any item has insufficient stock
+    const hasInsufficientStock = formattedItems.some(
+      (item) => item.is_insufficient_stock,
+    );
 
     res.status(200).json({
       success: true,
@@ -107,6 +116,7 @@ export const getCart = async (req, res, next) => {
         items: formattedItems,
         total_items,
         total_price,
+        has_insufficient_stock: hasInsufficientStock,
       },
     });
   } catch (error) {
@@ -280,7 +290,7 @@ export const updateCartItem = async (req, res, next) => {
 
     // Find cart item
     const cartItem = await CartItem.findById(req.params.itemId).populate(
-      "variant_id"
+      "variant_id",
     );
 
     if (!cartItem) {
@@ -463,7 +473,7 @@ export const getCartCount = async (req, res, next) => {
 
     // Count cart items
     const cartItems = await CartItem.find({ cart_id: cart._id }).populate(
-      "variant_id product_id"
+      "variant_id product_id",
     );
 
     // Filter active items only
@@ -472,7 +482,7 @@ export const getCartCount = async (req, res, next) => {
         item.product_id &&
         item.variant_id &&
         item.product_id.is_active &&
-        item.variant_id.is_active
+        item.variant_id.is_active,
     );
 
     const count = activeItems.reduce((sum, item) => sum + item.quantity, 0);
